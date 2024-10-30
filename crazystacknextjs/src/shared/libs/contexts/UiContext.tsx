@@ -1,10 +1,8 @@
 "use client";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { useIsMutating, useIsFetching } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { cn } from "@/lib/utils";
-import { CloseButton, LoadingSpinner } from "./ui/atoms";
-import { BoxError, BoxSuccess } from "./ui/molecules";
+import { CloseButton, LoadingSpinner } from "../../ui/atoms";
+import { BoxError, BoxSuccess } from "../../ui/molecules";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
