@@ -2,6 +2,7 @@ import { I18nProvider } from "@/application/providers/i18nProvider";
 import { QueryClientProvider } from "@/application/providers/QueryClientProvider";
 import { ThemeProvider } from "@/application/providers/ThemeProvider";
 import { WebSocketProvider } from "@/application/providers/webSocketProvider";
+import { AuthProvider } from "@/shared/libs/contexts/AuthContext";
 import { UiProvider } from "@/shared/libs/contexts/UiContext";
 import { Toaster } from "sonner";
 
@@ -23,9 +24,11 @@ export const AllProviders = ({ children }: AllProviderProps) => {
           disableTransitionOnChange
         >
           <UiProvider>
-            <WebSocketProvider>
-              {children} <Toaster />
-            </WebSocketProvider>
+            <AuthProvider>
+              <WebSocketProvider>
+                {children} <Toaster />
+              </WebSocketProvider>
+            </AuthProvider>
           </UiProvider>
         </ThemeProvider>
       </QueryClientProvider>
