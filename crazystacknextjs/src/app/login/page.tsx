@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
+import { SideDiv } from "./_components/side-div";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Entrar`,
@@ -7,8 +8,12 @@ export const metadata: Metadata = {
 };
 export default function Login() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div
+      className="container relative h-[800px] flex-col items-center justify-center
+    md:grid lg:max-w-none lg:grid-cols-2 lg:px-0
+    "
+    >
+      <SideDiv />
     </div>
   );
 }
