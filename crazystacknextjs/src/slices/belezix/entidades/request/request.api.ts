@@ -10,7 +10,7 @@ export const getRequests = async (page: number, ctx: any, params: any = {}) => {
     throw new Error("API client is null");
   }
   const { data } = await apiClient.get(`${PRIVATE_ROUTE}/loadByPage`, {
-    params: { page, sortBy: "name", typeSort: "desc", limitPerPage, ...params },
+    params: { page, sortBy: "createdAt", typeSort: "desc", limitPerPage, ...params },
   });
   const { requests, total } = data || {};
   const totalCount = Number(total ?? 0);
