@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/application/providers/ThemeProvider";
 import { WebSocketProvider } from "@/application/providers/webSocketProvider";
 import { UiProvider } from "@/shared/libs/contexts/UiContext";
 import { Toaster } from "sonner";
-import "@/application/i18n.config";
 
 export type AllProviderProps = {
   children: any;

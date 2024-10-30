@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import "@/application/i18n.config";
+
 import { useTranslation } from "react-i18next";
 import { createContext, useContext, useState } from "react";
 const I18nContext = createContext({} as any);

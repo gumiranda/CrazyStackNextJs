@@ -1,15 +1,15 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useUi } from "@/shared/libs/contexts/UiContext";
-import { useTranslation } from "react-i18next";
+// import { Button } from "@/components/ui/button";
+// import { useUi } from "@/shared/libs/contexts/UiContext";
+// import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  const { showModal, setLoading } = useUi();
-  const { t } = useTranslation(["PAGES"]);
+  // const { showModal, setLoading } = useUi();
+  //const { t } = useTranslation(["PAGES"]);
 
   return (
     <>
-      <Button
+      {/* <Button
         onClick={() => {
           setLoading(true);
 
@@ -26,7 +26,7 @@ export default function Home() {
         }}
       >
         Open modal
-      </Button>
+      </Button> */}
     </>
   );
 }
