@@ -1,6 +1,10 @@
+import { I18nProvider } from "@/application/providers/i18nProvider";
+import { QueryClientProvider } from "@/application/providers/QueryClientProvider";
 import { ThemeProvider } from "@/application/providers/ThemeProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WebSocketProvider } from "@/application/providers/webSocketProvider";
+import { UiProvider } from "@/shared/libs/contexts/UiContext";
 import { Toaster } from "sonner";
+import "@/application/i18n.config";
 
 export type AllProviderProps = {
   children: any;
@@ -8,19 +12,24 @@ export type AllProviderProps = {
 export type ProviderProps = {
   children: any;
 };
-const queryClient = new QueryClient();
 
 export const AllProviders = ({ children }: AllProviderProps) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children} <Toaster />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <I18nProvider>
+      <QueryClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <UiProvider>
+            <WebSocketProvider>
+              {children} <Toaster />
+            </WebSocketProvider>
+          </UiProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </I18nProvider>
   );
 };
