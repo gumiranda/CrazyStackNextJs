@@ -1,4 +1,4 @@
-import { LoginForm } from "@/slices/features/login";
+import { LoginForm } from "@/slices/general/features/login";
 import Link from "next/link";
 
 export const SignInDiv = () => {
