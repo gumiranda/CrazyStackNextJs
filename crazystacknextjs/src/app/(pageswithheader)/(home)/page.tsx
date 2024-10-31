@@ -67,10 +67,10 @@ export default async function Page() {
       </div>
       <div className="w-full lg:w-auto">
         <HorizontalList
-          title="Agendamentos"
-          array={requests}
-          type="appointment"
-          widthCard={342}
+          title="Novos"
+          array={newOwners}
+          type="owner"
+          widthCard={200}
         />
       </div>
     </div>
