@@ -1,6 +1,7 @@
 import React from "react";
 import { OwnerItem } from "@/slices/belezix/entidades/owner/ui/owner-item";
 import { AppointmentItem } from "@/slices/belezix/entidades/appointment/ui/organisms/appointment-item";
+import { ScrollWrapper } from "@/shared/ui/molecules";
 
 const ItemComponent: { [key: string]: React.ElementType } = {
   owner: OwnerItem,
@@ -27,11 +28,13 @@ export const HorizontalList = ({
               {title}
             </h2>
           </div>
-          {array.map((item: any, index: number) => (
-            <div key={item?._id ?? index} className={`min-w-[${widthCard}px]`}>
-              {React.createElement(ItemComponent[type], { item })}
-            </div>
-          ))}
+          <ScrollWrapper itemWidth={widthCard}>
+            {array.map((item: any, index: number) => (
+              <div key={item?.id ?? index} className={`min-w-[${widthCard}px]`}>
+                {React.createElement(ItemComponent[type], { item })}
+              </div>
+            ))}
+          </ScrollWrapper>
         </>
       )}
     </>
