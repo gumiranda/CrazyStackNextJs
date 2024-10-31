@@ -1,26 +1,33 @@
 import { setupAPIClient } from "@/shared/api";
-import { requestModel, type RequestProps } from "./request.model";
-
-const PRIVATE_ROUTE = "/request";
-
-export const getRequests = async (page: number, ctx: any, params: any = {}) => {
-  const limitPerPage = 10;
+import { RequestProps, requestModel } from "./request.model";
+export type GetRequestsResponse = {
+  requests: RequestProps[];
+  totalCount: number;
+  next?: number;
+  prev?: number;
+};
+const registerByPage = 10;
+export const getRequests = async (
+  page: number,
+  ctx: any,
+  params: any = {},
+): Promise<GetRequestsResponse> => {
   const apiClient = setupAPIClient(ctx);
   if (!apiClient) {
     throw new Error("API client is null");
   }
-  const { data } = await apiClient.get(`${PRIVATE_ROUTE}/loadByPage`, {
-    params: { page, sortBy: "createdAt", typeSort: "desc", limitPerPage, ...params },
+  const { data } = await apiClient.get("/request/loadByPage", {
+    params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
   });
   const { requests, total } = data || {};
   const totalCount = Number(total ?? 0);
-  const lastPage = Number.isInteger(totalCount / limitPerPage)
-    ? totalCount / limitPerPage
-    : Math.floor(totalCount / limitPerPage) + 1;
+  const lastPage = Number.isInteger(totalCount / registerByPage)
+    ? totalCount / registerByPage
+    : Math.floor(totalCount / registerByPage) + 1;
   const response = {
-    requests:
-      requests?.map?.((props: RequestProps) => requestModel(props).format()) ??
-      [],
+    requests: requests?.map?.((props: RequestProps) =>
+      requestModel(props).format(),
+    ),
     totalCount,
   };
   if (lastPage > page) {
@@ -30,4 +37,36 @@ export const getRequests = async (page: number, ctx: any, params: any = {}) => {
     Object.assign(response, { prev: page - 1 });
   }
   return response;
+};
+type InfiniteProps = {
+  pageParam: number;
+};
+export const getInfiniteRequests = async (
+  page: number,
+  params: any,
+): Promise<GetRequestsResponse> => {
+  return getRequests(page, null, params);
+};
+export const getRequestById = async (
+  id: string,
+  ctx: any,
+): Promise<RequestProps | null> => {
+  try {
+    if (!ctx) {
+      throw new Error("Context is null");
+    }
+    const apiClient = setupAPIClient(ctx);
+    if (!apiClient) {
+      throw new Error("API client is null");
+    }
+    const { data } = await apiClient.get("/request/load", {
+      params: { _id: id },
+    });
+    if (!data) {
+      return null;
+    }
+    return requestModel(data).format();
+  } catch (error) {
+    return null;
+  }
 };
