@@ -14,7 +14,7 @@ import { AppointmentHeader } from "./components/appointment-header";
 import { AppointmentDateTime } from "./components/appointment-datetime";
 import { AppointmentMap } from "./components/appointment-map";
 import { AppointmentStatusBadge } from "./components/appointment-badge";
-import { AppointmentSummary } from "../molecules/appointment-summary/appointment-summary";
+import { AppointmentSummary } from "../../molecules/appointment-summary/appointment-summary";
 import { AppointmentActions } from "./components/appointment-actions";
 import { PhoneItem } from "@/shared/ui/molecules";
 
