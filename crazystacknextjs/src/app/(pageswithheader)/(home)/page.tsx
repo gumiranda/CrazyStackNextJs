@@ -55,14 +55,24 @@ export default async function Page() {
   const { requests, totalCount } = await handleRequests(cookies);
   console.log({ owners, newOwners, requests });
   return (
-    <div>
-      <SubHeader />
-      <HorizontalList
-        title="Agendamentos"
-        array={requests}
-        type="appointment"
-        widthCard={342}
-      />
+    <div className="flex flex-col xl:flex-row lg:justify-around">
+      <div className="w-full lg:w-auto">
+        <SubHeader />
+        <HorizontalList
+          title="Agendamentos"
+          array={requests}
+          type="appointment"
+          widthCard={342}
+        />
+      </div>
+      <div className="w-full lg:w-auto">
+        <HorizontalList
+          title="Agendamentos"
+          array={requests}
+          type="appointment"
+          widthCard={342}
+        />
+      </div>
     </div>
   );
 }

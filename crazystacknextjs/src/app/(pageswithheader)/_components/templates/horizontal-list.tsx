@@ -22,8 +22,10 @@ export const HorizontalList = ({
     <>
       {array.length > 0 && (
         <>
-          <div>
-            <h2>{title}</h2>
+          <div className="mx-5 lg:max-w-lg">
+            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+              {title}
+            </h2>
           </div>
           {array.map((item: any, index: number) => (
             <div key={item?._id ?? index} className={`min-w-[${widthCard}px]`}>
