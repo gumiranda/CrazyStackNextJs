@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { useRef, useState, useEffect, ReactNode } from "react";
 
@@ -47,15 +48,18 @@ export const ScrollWrapper = ({ children, itemWidth }: ScrollWrapperProps) => {
   return (
     <div className="relative">
       {showLeftArrow && (
-        <DivArrow onClick={scrollLeft}>
+        <DivArrow onClick={scrollLeft} className="left-0">
           <ArrowLeft size={24} />
         </DivArrow>
       )}
-      <div className="flex gap-3 overflow-x-auto whitespace-nowrap scrollbar-hide [&::-webkit-scrollbar]:hidden">
+      <div
+        ref={containerRef}
+        className="flex gap-3 overflow-x-auto whitespace-nowrap scrollbar-hide [&::-webkit-scrollbar]:hidden"
+      >
         {children}
       </div>
       {showRightArrow && (
-        <DivArrow onClick={scrollRight}>
+        <DivArrow onClick={scrollRight} className={"translate-x-1/2 right-0"}>
           <ArrowRight size={24} />
         </DivArrow>
       )}
@@ -66,14 +70,17 @@ export const ScrollWrapper = ({ children, itemWidth }: ScrollWrapperProps) => {
 const DivArrow = ({
   onClick,
   children,
+  className,
 }: {
   onClick: () => void;
   children: ReactNode;
+  className?: string;
 }) => (
   <div
-    className="hidden md:block absolute top-1/2 left-0 transform -translate-x-1/2
-  -translate-y-1/2 text-black bg-gray-300 hover:bg-gray-400 rounded-full p-2 cursor-pointer z-50
-  "
+    className={cn(
+      "hidden md:block absolute top-1/2 transform -translate-x-1/2  -translate-y-1/2 text-black bg-gray-300 hover:bg-gray-400 rounded-full p-2 cursor-pointer z-50",
+      className,
+    )}
     onClick={onClick}
   >
     {children}
