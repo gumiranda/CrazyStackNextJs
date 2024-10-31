@@ -5,6 +5,7 @@ import { getCookies, parseCookies } from "@/shared/libs/utils";
 import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
+import { HorizontalList } from "../_components/templates/horizontal-list";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
@@ -56,6 +57,12 @@ export default async function Page() {
   return (
     <div>
       <SubHeader />
+      <HorizontalList
+        title="Agendamentos"
+        array={requests}
+        type="appointment"
+        widthCard={342}
+      />
     </div>
   );
 }
