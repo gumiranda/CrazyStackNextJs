@@ -1,9 +1,16 @@
 "use client";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
+import { AppointmentDialog } from "@/slices/belezix/entidades/appointment/ui/organisms";
 import { ServiceItem } from "@/slices/belezix/entidades/service/ui";
 import { useState } from "react";
-
-export const AppointmentService = ({ owner, service }) => {
+interface AppointmentServiceProps {
+  service: any;
+  owner: any;
+}
+export const AppointmentService: React.FC<AppointmentServiceProps> = ({
+  owner,
+  service,
+}) => {
   const { setSignInDialogIsOpen, user } = useAuth();
   const [appointmentSheetIsOpen, setAppointmentSheetIsOpen] = useState(false);
 
@@ -19,6 +26,12 @@ export const AppointmentService = ({ owner, service }) => {
       <ServiceItem
         handleAppointmentClick={handleAppointmentClick}
         service={service}
+      />
+      <AppointmentDialog
+        owner={owner}
+        service={service}
+        appointmentSheetIsOpen={appointmentSheetIsOpen}
+        setAppointmentSheetIsOpen={setAppointmentSheetIsOpen}
       />
     </>
   );
