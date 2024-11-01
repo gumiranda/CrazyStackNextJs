@@ -1,3 +1,4 @@
+"use client";
 import { whitelabel } from "@/application/whitelabel";
 import { cn } from "@/lib/utils";
 import NextLink from "next/link";
