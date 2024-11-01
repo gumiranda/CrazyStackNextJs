@@ -17,7 +17,7 @@ export const ServiceDetails = ({
       <p className="text-sm text-gray-400">{description}</p>
 
       <div className="lg:flex-row flex-col flex lg:items-center justify-between min-w-40">
-        <p className="lg:mb-0 mb-2 text-md font-bold text-lime-400 mr-3">
+        <p className="lg:mb-0 mb-2 text-md font-bold dark:text-lime-400 text-primary mr-3">
           {Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
