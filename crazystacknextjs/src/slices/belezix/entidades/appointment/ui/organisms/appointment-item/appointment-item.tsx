@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { isFuture } from "date-fns";
+import { isFuture, startOfDay } from "date-fns";
 import { useState } from "react";
 import { AppointmentHeader } from "./components/appointment-header";
 import { AppointmentDateTime } from "./components/appointment-datetime";
@@ -17,6 +17,8 @@ import { AppointmentStatusBadge } from "./components/appointment-badge";
 import { AppointmentSummary } from "../../molecules/appointment-summary/appointment-summary";
 import { AppointmentActions } from "./components/appointment-actions";
 import { PhoneItem } from "@/shared/ui/molecules";
+import { toast } from "sonner";
+import { api } from "@/shared/api";
 
 interface AppointmentItemProps {
   item: any;
@@ -25,7 +27,37 @@ interface AppointmentItemProps {
 export const AppointmentItem: React.FC<AppointmentItemProps> = ({ item }) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const isFutureAppointment = isFuture(item?.initDate);
-  const handleCancelAppointment = async () => {};
+  const handleCancelAppointment = async () => {
+    try {
+      setIsSheetOpen(false);
+      const request = {
+        ...item,
+        status: 3,
+        date: startOfDay(item?.initDate),
+        updatedAt: new Date(),
+      };
+      delete request.value;
+      delete request.statusLabel;
+      delete request.initDateFormatted;
+      delete request.endDateFormatted;
+      delete request.datePickerSelected;
+      delete request.endHour;
+      delete request.initHour;
+      delete request.createdAt;
+
+      const response = await api?.patch(
+        `/request/update?_id=${item?._id}`,
+        request,
+      );
+      if (response?.data?.error) {
+        throw new Error(response?.data?.error);
+      }
+      toast.success("Agendamento cancelado com sucesso");
+      window.location.reload();
+    } catch (error) {
+      toast.error("Erro ao cancelar agendamento");
+    }
+  };
   const handleSheetOpenChange = (isOpen: boolean) => {
     setIsSheetOpen(isOpen);
   };
