@@ -62,3 +62,23 @@ export const getOwners = async (page: number, ctx: any, params: any = {}) => {
   }
   return response;
 };
+export const getOwnerByIdPublic = async (
+  id: string,
+  ctx: any,
+): Promise<OwnerProps | null> => {
+  try {
+    const apiClient = setupAPIClient(ctx);
+    if (!apiClient) {
+      throw new Error("API client is null");
+    }
+    const { data } = await apiClient.get("/public/owner/load", {
+      params: { _id: id },
+    });
+    if (!data) {
+      return null;
+    }
+    return ownerModel(data).format();
+  } catch (error) {
+    return null;
+  }
+};
