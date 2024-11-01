@@ -18,6 +18,9 @@ import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { useGetUsers } from "@/slices/general/entidades/user";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { AppointmentCalendar } from "../../molecules/appointment-calendar";
+import { AppointmentTimeList } from "../../molecules/appointment-timelist";
+import { useGetTimeAvailables } from "../../../appointment.lib";
 
 interface AppointmentDialogProps {
   service: {
@@ -56,9 +59,25 @@ export const AppointmentDialog: React.FC<AppointmentDialogProps> = ({
     { role: "professional", ownerId: owner?._id },
   );
   const professionals = useMemo(() => userData?.users, [userData]);
-  console.log({ professionals });
+  const { data: timeAvailableData } = useGetTimeAvailables(
+    {
+      enabled:
+        appointmentSheetIsOpen && !!selectedProfessional && !!selectedDay,
+    },
+    {
+      professionalId: selectedProfessional,
+      serviceId: service._id,
+      ownerId: owner._id,
+      date: selectedDay?.toISOString(),
+    },
+  );
+  const timeList = useMemo(
+    () => timeAvailableData?.timeAvailable,
+    [timeAvailableData],
+  );
   const handleCreateAppointment = () => {};
-  const isConfirmButtonDisabled = true;
+  const isConfirmButtonDisabled =
+    !selectedDay || !selectedTime || !selectedProfessional;
   return (
     <Sheet
       open={appointmentSheetIsOpen}
@@ -86,6 +105,22 @@ export const AppointmentDialog: React.FC<AppointmentDialogProps> = ({
               </SelectContent>
             </Select>
           </div>
+        )}
+        <AppointmentCalendar
+          selectedDay={selectedDay}
+          onSelect={setSelectedDay}
+        />
+
+        {selectedDay && (
+          <AppointmentTimeList
+            timeList={
+              timeList?.map?.(
+                (time: { label: string; value: string }) => time.label,
+              ) ?? []
+            }
+            selectedTime={selectedTime}
+            onSelect={setSelectedTime}
+          />
         )}
         <SheetFooter className="mt-5 px-5">
           <Button
