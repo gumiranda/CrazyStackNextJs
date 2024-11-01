@@ -66,6 +66,7 @@ export const AppointmentTimeList = ({
             {timeList.map((time, index) => (
               <Button
                 key={index}
+                variant={selectedTime === time ? "default" : "outline"}
                 className="rounded-full"
                 onClick={() => onSelect(time)}
               >
