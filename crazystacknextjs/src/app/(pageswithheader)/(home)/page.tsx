@@ -72,6 +72,12 @@ export default async function Page() {
           type="owner"
           widthCard={200}
         />
+        <HorizontalList
+          title="Populares"
+          array={owners}
+          type="owner"
+          widthCard={200}
+        />
       </div>
     </div>
   );
