@@ -17,10 +17,13 @@ import {
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { useGetUsers } from "@/slices/general/entidades/user";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AppointmentCalendar } from "../../molecules/appointment-calendar";
 import { AppointmentTimeList } from "../../molecules/appointment-timelist";
 import { useGetTimeAvailables } from "../../../appointment.lib";
+import { toast } from "sonner";
+import { api } from "@/shared/api";
+import { addMinutes } from "date-fns";
 
 interface AppointmentDialogProps {
   service: {
@@ -75,7 +78,101 @@ export const AppointmentDialog: React.FC<AppointmentDialogProps> = ({
     () => timeAvailableData?.timeAvailable,
     [timeAvailableData],
   );
-  const handleCreateAppointment = () => {};
+  const handleCreateAppointment = useCallback(async () => {
+    if (!selectedTime || !selectedDay || !selectedProfessional) {
+      toast.error("Por favor, selecione um horário e um profissional.");
+      return;
+    }
+    try {
+      const response = await api?.get("/client/loadByPage", {
+        params: { page: 1, userId: user?._id, ownerId: owner?._id },
+      });
+      const clientsResult = response?.data;
+      let currentClient = clientsResult?.clients?.[0];
+      if (!currentClient) {
+        const response = await api?.post("/client/add", {
+          phone: user?.phone,
+          name: user?.name,
+          ownerId: owner?._id,
+          clientUserId: user?._id,
+          userId: user?._id,
+          active: true,
+          myOwnerId: owner?.createdById,
+        });
+        if (response) {
+          currentClient = response.data;
+        }
+        if (!currentClient) {
+          toast.error("Erro ao criar cliente.");
+          return;
+        }
+        return;
+      }
+      const timeToSend = timeList?.find?.(
+        (time: { label: string; value: string }) => time.label === selectedTime,
+      );
+      if (!timeToSend) {
+        toast.error("Horário selecionado não está disponível.");
+        return;
+      }
+      const professionalName = professionals.find(
+        (item: any) => item._id === selectedProfessional,
+      )?.name;
+      const requestObjectIds = {
+        haveDelivery: false,
+        haveRecurrence: false,
+        haveFidelity: false,
+        haveRide: false,
+        status: 0,
+        serviceId: service._id,
+        clientId: currentClient._id,
+        professionalId: selectedProfessional,
+        ownerId: owner._id,
+        createdForId: owner.createdById,
+        clientUserId: user?._id,
+        initDate: timeToSend.value,
+        endDate: addMinutes(
+          new Date(timeToSend.value),
+          service.duration,
+        ).toISOString(),
+        professionalName,
+        duration: service.duration,
+        serviceName: service.name,
+        ownerName: owner.name,
+        clientName: user?.name,
+        message: "   ",
+      };
+      const responseRequest = await api?.post("/request/add", requestObjectIds);
+      if (responseRequest?.data) {
+        toast.success("Agendamento realizado com sucesso!", {
+          action: {
+            label: "Ver agendamentos",
+            onClick: () => router.push("/appointments"),
+          },
+        });
+        setAppointmentSheetIsOpen(false);
+      }
+    } catch (error) {
+      toast.error("Erro ao criar agendamento.");
+    }
+  }, [
+    owner._id,
+    owner.createdById,
+    owner.name,
+    professionals,
+    router,
+    selectedDay,
+    selectedProfessional,
+    selectedTime,
+    service._id,
+    service.duration,
+    service.name,
+    setAppointmentSheetIsOpen,
+    timeList,
+    user?._id,
+    user?.name,
+    user?.phone,
+  ]);
   const isConfirmButtonDisabled =
     !selectedDay || !selectedTime || !selectedProfessional;
   return (
