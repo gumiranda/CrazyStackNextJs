@@ -5,7 +5,6 @@ export const useLogin = () => {
   const { login } = useAuth();
   const { handleSubmit, register, formState } = useLoginLib();
   const handleLogin: SubmitLoginHandler = async (data) => {
-    console.log(data);
     await login(data);
   };
   return { handleSubmit, register, formState, handleLogin };
