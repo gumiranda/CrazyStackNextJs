@@ -20,38 +20,47 @@ async function getParsedCookies() {
   }
   return parsedCookies;
 }
+async function handleOwners(filter: any) {
+  try {
+    const cookies = await getParsedCookies();
+
+    const { owners = [], totalCount = 0 } = await getOwnersPublic(
+      1,
+      cookies,
+      filter,
+    );
+    return { owners, totalCount };
+  } catch (error) {
+    return null;
+  }
+}
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookies = await getParsedCookies();
   const name = (await searchParams).title;
   const service = (await searchParams).service;
   const filter: any = { limitPerPage: 100 };
   if (name && name?.length > 0) {
     filter.name = name;
   }
-  const { owners = [], totalCount = 0 } = await getOwnersPublic(
-    1,
-    cookies,
-    filter,
-  );
-
+  const result = await handleOwners(filter);
+  if (!result) return null;
+  const { owners = [] } = result;
   return (
     <>
       <div className="my-6 px-5">
         <Search />
       </div>
       <div className="px-5">
-        {name ||
-          (service && (
-            <>
-              {" "}
-              <h2>Resultados para &quot;{name || service}</h2>
-              &quot;
-            </>
-          ))}
+        {(name || service) && (
+          <>
+            {" "}
+            <h2>Resultados para &quot;{name || service}</h2>
+            &quot;
+          </>
+        )}
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {owners?.map?.((owner: any) => (
