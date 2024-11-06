@@ -34,7 +34,6 @@ async function handleRequests(cookies: any) {
         });
     return { requests, totalCount };
   } catch (error: any) {
-    console.log(error);
     return { requests: [], totalCount: 0 };
   }
 }
@@ -53,7 +52,6 @@ export default async function Page() {
     : [];
   const newOwners = Array.isArray(lastOwners?.owners) ? lastOwners?.owners : [];
   const { requests, totalCount } = await handleRequests(cookies);
-  console.log({ owners, newOwners, requests });
   return (
     <div className="flex flex-col xl:flex-row lg:justify-around">
       <div className="w-full lg:w-auto">

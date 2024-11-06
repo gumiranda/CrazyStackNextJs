@@ -10,33 +10,37 @@ export const metadata: Metadata = {
   description: `Página de listagem dos meus agendamentos do ${whitelabel.systemName}. Aqui você pode listar e cancelar seus agendamentos.`,
 };
 async function getAppointments() {
-  const cookies = await getParsedCookies();
-  if (!cookies) {
+  try {
+    const cookies = await getParsedCookies();
+    if (!cookies) {
+      return null;
+    }
+    const {
+      requests: confirmedAppointments = [],
+      totalCount: confirmedTotalCount = 0,
+    } = await getRequests(1, cookies, {
+      initDate: startOfDay(new Date()).toISOString(),
+      sortBy: "initDate",
+      typeSort: "desc",
+    });
+
+    const {
+      requests: concludedAppointments = [],
+      totalCount: concludedTotalCount = 0,
+    } = await getRequests(1, cookies, {
+      endDate: startOfDay(new Date()).toISOString(),
+      sortBy: "initDate",
+    });
+    return {
+      confirmedAppointments,
+      confirmedTotalCount,
+      concludedAppointments,
+      concludedTotalCount,
+      cookies,
+    };
+  } catch (error) {
     return null;
   }
-  const {
-    requests: confirmedAppointments = [],
-    totalCount: confirmedTotalCount = 0,
-  } = await getRequests(1, cookies, {
-    initDate: startOfDay(new Date()).toISOString(),
-    sortBy: "initDate",
-    typeSort: "desc",
-  });
-
-  const {
-    requests: concludedAppointments = [],
-    totalCount: concludedTotalCount = 0,
-  } = await getRequests(1, cookies, {
-    endDate: startOfDay(new Date()).toISOString(),
-    sortBy: "initDate",
-  });
-  return {
-    confirmedAppointments,
-    confirmedTotalCount,
-    concludedAppointments,
-    concludedTotalCount,
-    cookies,
-  };
 }
 export default async function Page() {
   const appointments = await getAppointments();

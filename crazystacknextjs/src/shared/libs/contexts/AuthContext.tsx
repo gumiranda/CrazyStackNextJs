@@ -245,7 +245,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setLoading(false);
     }
   };
-  console.log({ user });
   return (
     <AuthContext.Provider
       value={{
