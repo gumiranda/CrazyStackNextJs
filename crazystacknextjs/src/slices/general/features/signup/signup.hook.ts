@@ -5,10 +5,7 @@ export const useSignUp = () => {
   const { signup } = useAuth();
   const { handleSubmit, register, formState, ...formProps } = useSignUpLib();
   const handleSignUp: SubmitSignUpHandler = async (data) => {
-    await signup({
-      ...data,
-      passwordConfirmation: data.password,
-    });
+    await signup(data);
   };
   return { handleSubmit, register, formState, handleSignUp, formProps };
 };

@@ -9,7 +9,8 @@ interface PhoneInputFieldProps {
   phoneError: string;
   isPhoneValid: boolean;
   mask: string;
-  onChange: (value: string) => void;
+  setPhone: (value: string) => void;
+  phone: string;
 }
 
 export const PhoneInputField = ({
@@ -19,7 +20,8 @@ export const PhoneInputField = ({
   phoneError,
   isPhoneValid,
   mask,
-  onChange,
+  setPhone,
+  phone,
 }: PhoneInputFieldProps) => {
   return (
     <div className="flex-1 space-y-2">
@@ -31,9 +33,12 @@ export const PhoneInputField = ({
         }`}
         placeholder={placeholder}
         mask={mask}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          setPhone(e.target.value);
+        }}
         replacement={{ _: /\d/ }}
         component={Input}
+        value={phone}
       />
       {phoneError && (
         <div className="flex items-center gap-2 text-red-500 text-sm">

@@ -25,6 +25,7 @@ interface CountrySelectorProps {
   setSearchTerm: (value: string) => void;
   searchTerm: string;
   setValue: (field: string, value: any) => void;
+  setPhone: (value: string) => void;
 }
 
 export const CountrySelector = ({
@@ -34,6 +35,7 @@ export const CountrySelector = ({
   setSearchTerm,
   searchTerm,
   setValue,
+  setPhone,
 }: CountrySelectorProps) => {
   const filteredCountries = countries.filter(
     (country) =>
@@ -81,6 +83,7 @@ export const CountrySelector = ({
                 });
                 setSelectedCountry(country);
                 setValue("phone", "");
+                setPhone("");
               }}
               className="flex items-center gap-2"
             >

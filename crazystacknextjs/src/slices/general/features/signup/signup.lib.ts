@@ -14,6 +14,10 @@ export interface SignUpFormData {
   passwordConfirmation: string;
   name: string;
   phone: string;
+  country: {
+    code: string;
+    phone: string;
+  };
 }
 
 export type SubmitSignUpHandler = SubmitHandler<SignUpFormData>;

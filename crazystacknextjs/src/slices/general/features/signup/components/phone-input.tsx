@@ -10,6 +10,7 @@ import parsePhoneNumberFromString, {
 
 export const PhoneInput = ({ label, id, type, formProps }: any) => {
   const { setValue } = formProps;
+  const [phone, setPhone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [searchTerm, setSearchTerm] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -34,14 +35,17 @@ export const PhoneInput = ({ label, id, type, formProps }: any) => {
       setIsPhoneValid(isValid);
       setPhoneError(isValid ? "" : "Invalid phone number");
       setValue("phone", formattedNumber);
+      setPhone(value);
       return { formatted: formattedNumber, isValid, phoneNumber };
     } catch (error) {
       setIsPhoneValid(false);
       setPhoneError("Invalid format");
       setValue("phone", value);
+      setPhone(value);
       return { formatted: value, isValid: false, phoneNumber: null };
     }
   };
+
   return (
     <div className="space-y-2">
       <Label htmlFor="phone">{label}</Label>
@@ -53,6 +57,7 @@ export const PhoneInput = ({ label, id, type, formProps }: any) => {
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
           setValue={setValue}
+          setPhone={setPhone}
         />
         <PhoneInputField
           id={id}
@@ -61,7 +66,8 @@ export const PhoneInput = ({ label, id, type, formProps }: any) => {
           phoneError={phoneError}
           isPhoneValid={isPhoneValid}
           mask={selectedCountry.mask}
-          onChange={validateAndFormatPhone}
+          setPhone={validateAndFormatPhone}
+          phone={phone}
         />
       </div>
     </div>
@@ -83,7 +89,7 @@ const countries = [
     phone: "1",
     flag: "🇺🇸",
     format: "(999) 999-9999",
-    mask: "(__) _____-____",
+    mask: "(___) ___-____",
   },
   {
     name: "Afghanistan",
@@ -91,7 +97,7 @@ const countries = [
     phone: "93",
     flag: "🇦🇫",
     format: "999 999 999",
-    mask: "____ _____",
+    mask: "___ ___ ___",
   },
   {
     name: "Albania",
@@ -99,7 +105,7 @@ const countries = [
     phone: "355",
     flag: "🇦🇱",
     format: "999 999 999",
-    mask: "_________",
+    mask: "___ ___ ___",
   },
   {
     name: "Algeria",
@@ -107,7 +113,7 @@ const countries = [
     phone: "213",
     flag: "🇩🇿",
     format: "999 999 999",
-    mask: "____ _____",
+    mask: "___ ___ ___",
   },
   {
     name: "Argentina",
@@ -115,7 +121,7 @@ const countries = [
     phone: "54",
     flag: "🇦🇷",
     format: "(999) 999-9999",
-    mask: "(__) _____-____",
+    mask: "(___) ___-____",
   },
   {
     name: "Australia",
@@ -123,7 +129,7 @@ const countries = [
     phone: "61",
     flag: "🇦🇺",
     format: "999 999 999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ___",
   },
   {
     name: "Austria",
@@ -131,7 +137,7 @@ const countries = [
     phone: "43",
     flag: "🇦🇹",
     format: "999 999 999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ___",
   },
   {
     name: "Belgium",
@@ -139,7 +145,7 @@ const countries = [
     phone: "32",
     flag: "🇧🇪",
     format: "999 999 999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ___",
   },
   {
     name: "Canada",
@@ -147,7 +153,7 @@ const countries = [
     phone: "1",
     flag: "🇨🇦",
     format: "(999) 999-9999",
-    mask: "(__) _____-____",
+    mask: "(___) ___-____",
   },
   {
     name: "China",
@@ -155,7 +161,7 @@ const countries = [
     phone: "86",
     flag: "🇨🇳",
     format: "999 999 9999",
-    mask: "____ _____",
+    mask: "___ ___ ____",
   },
   {
     name: "Colombia",
@@ -163,7 +169,7 @@ const countries = [
     phone: "57",
     flag: "🇨🇴",
     format: "999 999 9999",
-    mask: "____ _____",
+    mask: "___ ___ ____",
   },
   {
     name: "France",
@@ -171,7 +177,7 @@ const countries = [
     phone: "33",
     flag: "🇫🇷",
     format: "99 99 99 99 99",
-    mask: "____ _____",
+    mask: "__ __ __ __ __",
   },
   {
     name: "Germany",
@@ -179,7 +185,7 @@ const countries = [
     phone: "49",
     flag: "🇩🇪",
     format: "999 999 9999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ____",
   },
   {
     name: "India",
@@ -187,7 +193,7 @@ const countries = [
     phone: "91",
     flag: "🇮🇳",
     format: "99999 99999",
-    mask: "____ _____",
+    mask: "_____ _____",
   },
   {
     name: "Italy",
@@ -195,7 +201,7 @@ const countries = [
     phone: "39",
     flag: "🇮🇹",
     format: "999 999 9999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ____",
   },
   {
     name: "Japan",
@@ -203,7 +209,7 @@ const countries = [
     phone: "81",
     flag: "🇯🇵",
     format: "999 999 9999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ____",
   },
   {
     name: "Mexico",
@@ -211,7 +217,7 @@ const countries = [
     phone: "52",
     flag: "🇲🇽",
     format: "999 999 9999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ____",
   },
   {
     name: "Portugal",
@@ -219,7 +225,7 @@ const countries = [
     phone: "351",
     flag: "🇵🇹",
     format: "999 999 999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ___",
   },
   {
     name: "Spain",
@@ -227,7 +233,7 @@ const countries = [
     phone: "34",
     flag: "🇪🇸",
     format: "999 999 999",
-    mask: "(__) _____-____",
+    mask: "___ ___ ___",
   },
   {
     name: "United Kingdom",
@@ -235,6 +241,6 @@ const countries = [
     phone: "44",
     flag: "🇬🇧",
     format: "9999 999999",
-    mask: "____ _____",
+    mask: "____ ______",
   },
 ] as const as Country[];

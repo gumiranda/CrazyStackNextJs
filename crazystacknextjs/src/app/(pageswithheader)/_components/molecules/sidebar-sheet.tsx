@@ -1,5 +1,4 @@
 "use client";
-import { SignInDiv } from "@/app/login/_components/signin-div";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +23,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { SignInDiv } from "@/app/(auth)/login/_components/signin-div";
 
 type Props = {
   quickSearchOptions: any[];

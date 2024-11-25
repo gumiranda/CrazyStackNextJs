@@ -52,12 +52,6 @@ export const EmailPasswordForm = ({
           label={t("PAGES:AUTH_PAGE.phone", { defaultValue: "Telefone" })}
           id="phone"
           type="tel"
-          placeholder={t("PAGES:AUTH_PAGE.placeholderphone", {
-            defaultValue: "(00) 00000-0000",
-          })}
-          disabled={formState.isSubmitting}
-          register={register}
-          error={formState.errors.phone?.message?.toString()}
           formProps={formProps}
         />
         <FormField
