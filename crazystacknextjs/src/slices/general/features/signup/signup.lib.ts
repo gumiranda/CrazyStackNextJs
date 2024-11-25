@@ -1,6 +1,12 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  parsePhoneNumberFromString,
+  AsYouType,
+  isValidPhoneNumber,
+  CountryCode,
+} from "libphonenumber-js";
 
 export interface SignUpFormData {
   email: string;
@@ -20,7 +26,21 @@ export const signupSchema = yup.object({
     .oneOf([yup.ref("password")], "As senhas não correspondem")
     .required("Confirmação de senha é obrigatória"),
   name: yup.string().required("Nome é obrigatório"),
+  country: yup.object({
+    code: yup.string().required("País é obrigatório"),
+    phone: yup.string().required("DDD é obrigatório"),
+  }),
   phone: yup.string().required("Telefone é obrigatório"),
+  /* .test("phone", "Telefone inválido", function (value) {
+     const digitsOnly = value?.replace?.(/\D/g, "");
+      const country = this.parent.country;
+      const fullNumber = `+${country.phone}${digitsOnly}`;
+      const isValid = isValidPhoneNumber(
+        fullNumber,
+        country.code as CountryCode,
+      );
+      return isValid;
+    }),*/
 });
 
 export type YupSchema = yup.InferType<typeof signupSchema>;
