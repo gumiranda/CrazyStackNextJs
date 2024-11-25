@@ -3,6 +3,7 @@ import { Icons } from "@/components/ui/icons";
 import { FormField } from "@/shared/ui/atoms/form-field";
 import { FieldValues, FormState, SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { PhoneInput } from "./phone-input";
 
 interface EmailPasswordFormProps {
   formState: FormState<FieldValues>;
@@ -45,7 +46,7 @@ export const EmailPasswordForm = ({
           register={register}
           error={formState.errors.email?.message?.toString()}
         />
-        <FormField
+        <PhoneInput
           label={t("PAGES:AUTH_PAGE.phone", { defaultValue: "Telefone" })}
           id="phone"
           type="tel"
@@ -80,6 +81,7 @@ export const EmailPasswordForm = ({
           register={register}
           error={formState.errors.passwordConfirmation?.message?.toString()}
         />
+
         <Button disabled={formState.isSubmitting} className="mt-2">
           {formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
