@@ -30,9 +30,11 @@ export const signupSchema = yup.object({
     code: yup.string().required("País é obrigatório"),
     phone: yup.string().required("DDD é obrigatório"),
   }),
-  phone: yup.string().required("Telefone é obrigatório"),
-  /* .test("phone", "Telefone inválido", function (value) {
-     const digitsOnly = value?.replace?.(/\D/g, "");
+  phone: yup
+    .string()
+    .required("Telefone é obrigatório")
+    .test("phone", "Telefone inválido", function (value) {
+      const digitsOnly = value?.replace?.(/\D/g, "");
       const country = this.parent.country;
       const fullNumber = `+${country.phone}${digitsOnly}`;
       const isValid = isValidPhoneNumber(
@@ -40,7 +42,7 @@ export const signupSchema = yup.object({
         country.code as CountryCode,
       );
       return isValid;
-    }),*/
+    }),
 });
 
 export type YupSchema = yup.InferType<typeof signupSchema>;

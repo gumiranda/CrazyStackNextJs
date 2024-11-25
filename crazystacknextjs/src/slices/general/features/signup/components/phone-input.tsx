@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -246,48 +247,34 @@ export const PhoneInput = ({
       country.code.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const validateAndFormatPhone = (value: string, country: Country) => {
+  const validateAndFormatPhone = (value: string) => {
     try {
       const digitsOnly = value.replace(/\D/g, "");
-      const formatter = new AsYouType(country.code as CountryCode);
+      const formatter = new AsYouType(selectedCountry.code as CountryCode);
       const formattedNumber = formatter.input(digitsOnly);
-      const fullNumber = `+${country.phone}${digitsOnly}`;
+      const fullNumber = `+${selectedCountry.phone}${digitsOnly}`;
       const isValid = isValidPhoneNumber(
         fullNumber,
-        country.code as CountryCode,
+        selectedCountry.code as CountryCode,
       );
 
       const phoneNumber = parsePhoneNumberFromString(
         fullNumber,
-        country.code as CountryCode,
+        selectedCountry.code as CountryCode,
       );
 
       setIsPhoneValid(isValid);
-      setPhoneError(isValid ? "" : "Número de telefone inválido");
-
-      return {
-        formatted: formattedNumber,
-        isValid,
-        phoneNumber,
-      };
+      setPhoneError(isValid ? "" : "Invalid phone number");
+      setValue("phone", formattedNumber);
+      return { formatted: formattedNumber, isValid, phoneNumber };
     } catch (error) {
       setIsPhoneValid(false);
-      setPhoneError("Formato inválido");
-      return {
-        formatted: value,
-        isValid: false,
-        phoneNumber: null,
-      };
+      setPhoneError("Invalid format");
+      setValue("phone", value);
+      return { formatted: value, isValid: false, phoneNumber: null };
     }
   };
 
-  // useEffect(() => {
-  //  if (phone) {
-  //    const { formatted } = validateAndFormatPhone(phone, selectedCountry);
-  //   setValue("phone", formatted, { shouldValidate: true });
-  //  }
-  //  }, [phone, selectedCountry, setValue]);
-  console.log(selectedCountry);
   return (
     <div className="space-y-2">
       <Label htmlFor="phone" className="text-sm text-gray-400">
@@ -355,7 +342,7 @@ export const PhoneInput = ({
                     +{country.phone}
                   </span>
                   {selectedCountry.code === country.code && (
-                    <Check className="h-4 w-4" />
+                    <Check className="ml-auto h-4 w-4" />
                   )}
                 </DropdownMenuItem>
               ))}
@@ -364,7 +351,7 @@ export const PhoneInput = ({
         </DropdownMenu>
         <div className="flex-1 space-y-2">
           <InputMask
-            id="phone"
+            id={id}
             type={type}
             className={`bg-background text-muted-foreground ${
               phoneError
@@ -377,19 +364,8 @@ export const PhoneInput = ({
             required
             component={Input}
             mask={selectedCountry.mask}
-            label={label}
-            onMask={(e) => {
-              console.log(e.target.value);
-              //setValue("phone", e.target.value);
-            }}
-            replacement={
-              //   selectedCountry?.mask?.includes?.("(")
-              //   ? { _: /\d/, A: /[a-zA-Z0-9]/, X: /[a-zA-Z]/ }
-              // :
-              { _: /\d/ }
-            }
-            defaultValue={""}
-            {...register("phone")}
+            onChange={(e) => validateAndFormatPhone(e.target.value)}
+            replacement={{ _: /\d/ }}
           />
           {phoneError && (
             <div className="flex items-center gap-2 text-red-500 text-sm">
