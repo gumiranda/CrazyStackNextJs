@@ -383,9 +383,10 @@ export const PhoneInput = ({
               //setValue("phone", e.target.value);
             }}
             replacement={
-              selectedCountry?.mask?.includes?.("(")
-                ? { _: /\d/, A: /[a-zA-Z0-9]/, X: /[a-zA-Z]/ }
-                : { _: /\d/ }
+              //   selectedCountry?.mask?.includes?.("(")
+              //   ? { _: /\d/, A: /[a-zA-Z0-9]/, X: /[a-zA-Z]/ }
+              // :
+              { _: /\d/ }
             }
             defaultValue={""}
             {...register("phone")}
