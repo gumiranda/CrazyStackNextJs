@@ -9,7 +9,9 @@ export interface SignUpFormData {
   name: string;
   phone: string;
 }
+
 export type SubmitSignUpHandler = SubmitHandler<SignUpFormData>;
+
 export const signupSchema = yup.object({
   email: yup.string().email("Email inválido").required("Email é obrigatório"),
   password: yup.string().required("Senha é obrigatória"),
@@ -20,6 +22,7 @@ export const signupSchema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
   phone: yup.string().required("Telefone é obrigatório"),
 });
+
 export type YupSchema = yup.InferType<typeof signupSchema>;
 
 export const useSignUpLib = () => {

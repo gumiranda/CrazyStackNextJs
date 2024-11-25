@@ -24,6 +24,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     </div>
   );
 }
+
 const GoogleSignUpSection = ({ formState }: { formState: any }) => {
   const { t } = useTranslation(["PAGES"]);
 

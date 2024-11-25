@@ -22,7 +22,18 @@ export const EmailPasswordForm = ({
   const { t } = useTranslation(["PAGES"]);
   return (
     <form onSubmit={handleSubmit(handleSignUp)}>
-      <div className="grid gap-2">
+      <div className="grid gap-4">
+        <FormField
+          label={t("PAGES:AUTH_PAGE.name", { defaultValue: "Nome" })}
+          id="name"
+          type="text"
+          placeholder={t("PAGES:AUTH_PAGE.placeholdername", {
+            defaultValue: "Seu nome completo",
+          })}
+          disabled={formState.isSubmitting}
+          register={register}
+          error={formState.errors.name?.message?.toString()}
+        />
         <FormField
           label={t("PAGES:AUTH_PAGE.email", { defaultValue: "Email" })}
           id="email"
@@ -35,6 +46,17 @@ export const EmailPasswordForm = ({
           error={formState.errors.email?.message?.toString()}
         />
         <FormField
+          label={t("PAGES:AUTH_PAGE.phone", { defaultValue: "Telefone" })}
+          id="phone"
+          type="tel"
+          placeholder={t("PAGES:AUTH_PAGE.placeholderphone", {
+            defaultValue: "(00) 00000-0000",
+          })}
+          disabled={formState.isSubmitting}
+          register={register}
+          error={formState.errors.phone?.message?.toString()}
+        />
+        <FormField
           label={t("PAGES:AUTH_PAGE.password", { defaultValue: "Senha" })}
           id="password"
           type="password"
@@ -44,6 +66,19 @@ export const EmailPasswordForm = ({
           disabled={formState.isSubmitting}
           register={register}
           error={formState.errors.password?.message?.toString()}
+        />
+        <FormField
+          label={t("PAGES:AUTH_PAGE.passwordConfirmation", {
+            defaultValue: "Confirmar Senha",
+          })}
+          id="passwordConfirmation"
+          type="password"
+          placeholder={t("PAGES:AUTH_PAGE.placeholderpasswordConfirmation", {
+            defaultValue: "********",
+          })}
+          disabled={formState.isSubmitting}
+          register={register}
+          error={formState.errors.passwordConfirmation?.message?.toString()}
         />
         <Button disabled={formState.isSubmitting} className="mt-2">
           {formState.isSubmitting && (
