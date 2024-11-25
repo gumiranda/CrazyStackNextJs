@@ -49,7 +49,7 @@ export const EmailPasswordForm = ({
           {formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {t("PAGES:AUTH_PAGE.signIn", { defaultValue: "Entrar" })}
+          {t("PAGES:AUTH_PAGE.signUp", { defaultValue: "Criar conta" })}
         </Button>
       </div>
     </form>
