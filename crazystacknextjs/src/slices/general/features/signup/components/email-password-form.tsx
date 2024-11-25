@@ -12,6 +12,7 @@ interface EmailPasswordFormProps {
   ) => (e?: React.BaseSyntheticEvent) => Promise<void>;
   register: any;
   handleSignUp: any;
+  formProps: any;
 }
 
 export const EmailPasswordForm = ({
@@ -19,6 +20,7 @@ export const EmailPasswordForm = ({
   handleSubmit,
   register,
   handleSignUp,
+  formProps,
 }: EmailPasswordFormProps) => {
   const { t } = useTranslation(["PAGES"]);
   return (
@@ -56,6 +58,7 @@ export const EmailPasswordForm = ({
           disabled={formState.isSubmitting}
           register={register}
           error={formState.errors.phone?.message?.toString()}
+          formProps={formProps}
         />
         <FormField
           label={t("PAGES:AUTH_PAGE.password", { defaultValue: "Senha" })}

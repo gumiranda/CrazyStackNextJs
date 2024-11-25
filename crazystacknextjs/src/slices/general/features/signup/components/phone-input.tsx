@@ -171,7 +171,9 @@ export const PhoneInput = ({
   disabled,
   register,
   error,
+  formProps,
 }) => {
+  console.log({ formProps });
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -290,7 +292,7 @@ export const PhoneInput = ({
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="w-[140px] justify-between bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
+              className="w-[140px] justify-between bg-background text-muted-foreground hover:bg-background"
             >
               <span className="flex items-center gap-2 truncate">
                 <span className="flex items-center">
@@ -307,14 +309,14 @@ export const PhoneInput = ({
               <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[300px] bg-gray-800 border-gray-700">
-            <div className="flex items-center border-b border-gray-700 px-3 py-2">
+          <DropdownMenuContent className="w-[300px] bg-background">
+            <div className="flex items-center border-b px-3 py-2">
               <Search className="h-4 w-4 text-gray-400 mr-2" />
               <Input
                 placeholder="Search countries..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="border-0 bg-transparent text-white focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="border-0 bg-transparent text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
             <ScrollArea className="h-[200px]">
@@ -327,7 +329,7 @@ export const PhoneInput = ({
                     setPhoneError("");
                     setIsPhoneValid(false);
                   }}
-                  className="flex items-center gap-2 text-white hover:bg-gray-700"
+                  className="flex items-center gap-2 text-muted-foreground hover:bg-background"
                 >
                   <span className="flex items-center">
                     <img
@@ -356,7 +358,7 @@ export const PhoneInput = ({
             type="tel"
             value={formData.phone}
             onChange={handlePhoneChange}
-            className={`bg-gray-800 border-gray-700 text-white ${
+            className={`bg-background text-muted-foreground ${
               phoneError
                 ? "border-red-500 focus-visible:ring-red-500"
                 : isPhoneValid

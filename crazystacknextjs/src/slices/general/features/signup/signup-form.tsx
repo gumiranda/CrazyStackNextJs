@@ -10,7 +10,8 @@ import { Icons } from "@/components/ui/icons";
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
-  const { formState, handleSubmit, register, handleSignUp } = useSignUp();
+  const { formState, handleSubmit, register, handleSignUp, formProps } =
+    useSignUp();
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -19,6 +20,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         handleSubmit={handleSubmit}
         register={register}
         handleSignUp={handleSignUp}
+        formProps={formProps}
       />
       <GoogleSignUpSection formState={formState} />
     </div>
