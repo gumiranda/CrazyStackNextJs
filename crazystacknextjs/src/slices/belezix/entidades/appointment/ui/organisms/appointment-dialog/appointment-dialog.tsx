@@ -100,13 +100,12 @@ export const AppointmentDialog: React.FC<AppointmentDialogProps> = ({
           myOwnerId: owner?.createdById,
         });
         if (response) {
-          currentClient = response.data;
+          currentClient = response?.data;
         }
         if (!currentClient) {
           toast.error("Erro ao criar cliente.");
           return;
         }
-        return;
       }
       const timeToSend = timeList?.find?.(
         (time: { label: string; value: string }) => time.label === selectedTime,
