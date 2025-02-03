@@ -1,18 +1,9 @@
 "use client";
 import { SignInDiv } from "@/app/login/_components/signin-div";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { AppointmentDialog } from "@/slices/belezix/entidades/appointment/ui/organisms";
 import { ServiceItem } from "@/slices/belezix/entidades/service/ui";
-import { LogInIcon } from "lucide-react";
 import { useState } from "react";
 interface AppointmentServiceProps {
   service: any;
