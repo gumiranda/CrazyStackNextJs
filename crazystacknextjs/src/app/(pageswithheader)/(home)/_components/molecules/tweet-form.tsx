@@ -108,14 +108,14 @@ export function TweetForm() {
       className="max-w-2xl mx-auto mt-10 mb-6 p-4 rounded-lg shadow-md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col md:flex-row items-start space-x-4">
-          <Avatar className="w-12 h-12 ml-4 md:ml-0 mb-4 md:mb-0">
+        <div className="w-full flex flex-col md:flex-row items-start">
+          <Avatar className="w-12 h-12 md:ml-0 md:mr-4 mb-4 md:mb-0">
             <AvatarImage src="/placeholder-avatar.jpg" alt="User" />
             <AvatarFallback>
               {user?.name?.charAt?.(0)?.toUpperCase?.() ?? "U"}
             </AvatarFallback>
           </Avatar>
-          <div className="flex-grow space-y-2">
+          <div className="flex-grow space-y-2 min-w-full md:min-w-fit">
             <Textarea
               value={tweet}
               onChange={(e) => setTweet(e.target.value)}

@@ -55,41 +55,45 @@ export default async function Page() {
   const { requests, totalCount } = await handleRequests(cookies);
   return (
     <>
-      <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-7xl">
+      <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-8xl">
         <section
-          className="flex flex-col w-full
-      px-3 border-r-2 border-gray-900"
+          className="flex flex-col w-full justify-center
+      px-3 border-r-2 border-gray-900 max-w-2xl"
         >
-          <SubHeader />{" "}
-          <HorizontalList
-            title="Agendamentos"
-            array={requests}
-            type="appointment"
-            widthCard={342}
-          />
-          <HorizontalList
-            title="Novos"
-            array={newOwners}
-            type="owner"
-            widthCard={200}
-          />
-          <HorizontalList
-            title="Populares"
-            array={owners}
-            type="owner"
-            widthCard={200}
-          />
+          <div className="lg:mx-16 mb-10">
+            <SubHeader />
+            <HorizontalList
+              title="Agendamentos"
+              array={requests}
+              type="appointment"
+              widthCard={342}
+            />
+          </div>
+          <div className="lg:mx-16">
+            <HorizontalList
+              title="Novos"
+              array={newOwners}
+              type="owner"
+              widthCard={200}
+            />
+            <HorizontalList
+              title="Populares"
+              array={owners}
+              type="owner"
+              widthCard={200}
+            />
+          </div>
         </section>
-        <section className="flex flex-col w-full">
-          <div className="m-10">
+        <section className="flex flex-col w-full max-w-6xl">
+          <div className="mx-10 lg:mx-16 my-10">
             <h2 className="text-xl font-bold font-inter">Feed</h2>
             <p>
               Veja o que as pessoas estão falando sobre o Belezix e participe
             </p>
             <TweetForm />
-            <div className="flex flex-col justify-center space-y-4">
-              <TweetList />
-            </div>
+          </div>
+          <div className="mx-10 lg:mx-16 flex flex-col items-center justify-center space-y-4">
+            <TweetList />
           </div>
         </section>
       </main>
