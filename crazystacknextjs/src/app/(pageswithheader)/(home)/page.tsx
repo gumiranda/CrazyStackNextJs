@@ -6,7 +6,8 @@ import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import { HorizontalList } from "../_components/templates/horizontal-list";
-
+import { TweetForm } from "./_components/molecules/tweet-form";
+import { TweetList } from "./_components/molecules/tweet-list";
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
   description: `Página de inicial do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,
@@ -53,30 +54,35 @@ export default async function Page() {
   const newOwners = Array.isArray(lastOwners?.owners) ? lastOwners?.owners : [];
   const { requests, totalCount } = await handleRequests(cookies);
   return (
-    <div className="flex flex-col xl:flex-row lg:justify-around">
-      <div className="w-full lg:w-auto">
-        <SubHeader />
-        <HorizontalList
-          title="Agendamentos"
-          array={requests}
-          type="appointment"
-          widthCard={342}
-        />
-      </div>
-      <div className="w-full lg:w-auto">
-        <HorizontalList
-          title="Novos"
-          array={newOwners}
-          type="owner"
-          widthCard={200}
-        />
-        <HorizontalList
-          title="Populares"
-          array={owners}
-          type="owner"
-          widthCard={200}
-        />
-      </div>
-    </div>
+    <>
+      <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-7xl">
+        <section
+          className="flex flex-col w-full
+      px-3 border-r-2 border-gray-900"
+        >
+          <SubHeader />
+          <HorizontalList
+            title="Agendamentos"
+            array={requests}
+            type="appointment"
+            widthCard={342}
+          />
+        </section>
+        <section className="w-full lg:w-auto">
+          <HorizontalList
+            title="Novos"
+            array={newOwners}
+            type="owner"
+            widthCard={200}
+          />
+          <HorizontalList
+            title="Populares"
+            array={owners}
+            type="owner"
+            widthCard={200}
+          />
+        </section>
+      </main>
+    </>
   );
 }
