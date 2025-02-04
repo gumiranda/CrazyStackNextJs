@@ -80,7 +80,7 @@ export default async function Page({
       </div>
       <div className="space-y-2 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-4xl mx-auto">
           {owner?.services?.map?.((service: any, index: number) => (
             <React.Fragment key={service._id ?? index}>
               <AppointmentService
