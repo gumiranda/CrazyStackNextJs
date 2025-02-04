@@ -87,7 +87,9 @@ export default async function Page() {
               Veja o que as pessoas estão falando sobre o Belezix e participe
             </p>
             <TweetForm />
-            <TweetList />
+            <div className="flex flex-col justify-center space-y-4">
+              <TweetList />
+            </div>
           </div>
         </section>
       </main>
