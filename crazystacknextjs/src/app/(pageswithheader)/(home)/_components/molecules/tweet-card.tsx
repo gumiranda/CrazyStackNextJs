@@ -12,7 +12,11 @@ import { Heart, MessageCircle, Repeat2, Share2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { TweetForm } from "./tweet-form";
 
-export const TweetCard = ({ tweet, canReply = true }: any) => {
+export const TweetCard = ({
+  tweet,
+  canReply = false,
+  handleChangeCanReply,
+}: any) => {
   const isReply = !!tweet?.tweetId;
   return (
     <Card key={tweet.id} className="w-full">
@@ -49,7 +53,7 @@ export const TweetCard = ({ tweet, canReply = true }: any) => {
             variant="ghost"
             size="sm"
             className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors"
-            onClick={() => console.log("Reply")}
+            onClick={() => handleChangeCanReply({ tweet })}
           >
             <MessageCircle className="w-5 h-5" />
             <span>{tweet.replies}</span>

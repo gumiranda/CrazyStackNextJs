@@ -55,10 +55,23 @@ const initialTweets: Tweet[] = [
 
 export function TweetList() {
   const [tweets, setTweets] = useState(initialTweets);
+  const [canReply, setCanReply] = useState<Tweet | null>(null);
+  const handleChangeCanReply = ({ tweet }: { tweet: Tweet }) => {
+    if (canReply?._id === tweet?._id) {
+      setCanReply(null);
+      return;
+    }
+    setCanReply(tweet);
+  };
   return (
     <>
       {tweets.map((tweet) => (
-        <TweetCard tweet={tweet} key={tweet?._id} />
+        <TweetCard
+          tweet={tweet}
+          key={tweet?._id}
+          canReply={canReply?._id === tweet?._id}
+          handleChangeCanReply={handleChangeCanReply}
+        />
       ))}
     </>
   );
