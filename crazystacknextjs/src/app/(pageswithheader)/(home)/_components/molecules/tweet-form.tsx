@@ -113,7 +113,7 @@ export function TweetForm() {
             <Textarea
               value={tweet}
               onChange={(e) => setTweet(e.target.value)}
-              placeholder="What's happening?"
+              placeholder="Compartilhe seus momentos de beleza e autocuidado..."
               className="w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
               rows={3}
               maxLength={MAX_TWEET_LENGTH}
