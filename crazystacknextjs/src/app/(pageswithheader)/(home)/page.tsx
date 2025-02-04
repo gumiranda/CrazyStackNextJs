@@ -58,7 +58,7 @@ export default async function Page() {
   const { requests, totalCount } = await handleRequests(cookies);
   return (
     <>
-      <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-8xl">
+      <main className="min-h-screen flex flex-col lg:flex-row justify-center mx-auto max-w-8xl">
         <section className="flex flex-col w-full px-3 border-r-2 border-gray-900 max-w-4xl">
           <div className="lg:mx-16 my-5">
             <SubHeader />
