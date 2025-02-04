@@ -55,11 +55,11 @@ export default async function Page() {
     ? popularOwners?.owners
     : [];
   const newOwners = Array.isArray(lastOwners?.owners) ? lastOwners?.owners : [];
-  const { requests, totalCount } = await handleRequests(cookies);
+  const { requests, totalCount } = await handleRequests(cookies); //lg:max-w-xl xl:max-w-6xl 2xl:max-w-8xl
   return (
     <>
-      <main className="min-h-screen flex flex-col lg:flex-row justify-center mx-auto max-w-8xl">
-        <section className="flex flex-col w-full px-3 border-r-2 border-gray-900 max-w-4xl">
+      <main className="min-h-screen flex flex-col xl:flex-row justify-center mx-auto">
+        <section className="flex flex-col w-full px-3 border-r-2 border-gray-900">
           <div className="xl:mx-16 my-5">
             <SubHeader />
             <HorizontalList
@@ -84,7 +84,7 @@ export default async function Page() {
             />
           </div>
         </section>
-        <section className="flex flex-col w-full max-w-6xl">
+        <section className="flex flex-col w-full">
           <div className="mx-10 xl:mx-16 my-10">
             <h2 className="text-xl font-bold font-inter">Feed</h2>
             <p>

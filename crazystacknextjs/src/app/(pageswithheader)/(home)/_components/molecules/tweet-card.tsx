@@ -76,15 +76,6 @@ export const TweetCard = ({
             <Heart className="w-5 h-5" />
             <span>{tweet.likes}</span>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors"
-            onClick={() => console.log("Share")}
-          >
-            <Share2 className="w-5 h-5" />
-            <span>Share</span>
-          </Button>
         </div>
       </CardFooter>
       {canReply && (
