@@ -1,28 +1,46 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2, ImageIcon, Smile, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ca } from "date-fns/locale";
 import { parseCookies } from "nookies";
 import { uploadPhoto } from "@/slices/belezix/entidades/photo/photo.api";
 import { addTweet } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
+import EmojiPicker from "./emoji-picker";
 
 const MAX_TWEET_LENGTH = 280;
 
 export function TweetForm() {
   const { user } = useAuth();
-  console.log({ user });
   const [tweet, setTweet] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -70,6 +88,11 @@ export function TweetForm() {
     }
   };
 
+  const handleEmojiSelect = (emoji: string) => {
+    setTweet(tweet + emoji);
+    setShowEmojiPicker(false);
+  };
+
   const remainingChars = MAX_TWEET_LENGTH - tweet.length;
   const isOverLimit = remainingChars < 0;
 
@@ -78,7 +101,7 @@ export function TweetForm() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="max-w-2xl mx-auto mt-10 mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+      className="max-w-2xl mx-auto mt-10 mb-6 p-4 rounded-lg shadow-md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-start space-x-4">
@@ -122,7 +145,7 @@ export function TweetForm() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between relative">
               <div className="flex space-x-2">
                 <Button
                   type="button"
@@ -145,11 +168,17 @@ export function TweetForm() {
                   type="button"
                   size="icon"
                   variant="outline"
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   aria-label="Add emoji"
                 >
                   <Smile className="w-4 h-4" />
                 </Button>
               </div>
+              {showEmojiPicker && (
+                <div ref={emojiPickerRef} className="absolute mt-2 z-10">
+                  <EmojiPicker onEmojiSelect={handleEmojiSelect} />
+                </div>
+              )}
               <AnimatePresence>
                 {tweet.length > 0 && (
                   <motion.span
