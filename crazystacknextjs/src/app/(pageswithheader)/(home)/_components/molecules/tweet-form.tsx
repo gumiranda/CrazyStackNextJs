@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 const MAX_TWEET_LENGTH = 280;
 
-export function TweetForm() {
+export function TweetForm({ tweetId }: { tweetId?: string }) {
   const { user } = useAuth();
   const [tweet, setTweet] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -54,11 +54,20 @@ export function TweetForm() {
           photo = await uploadPhoto({ formDataImage, cookies });
         }
         const response = await addTweet({
-          tweet: { userSlug: user?.name, body: tweet, image: photo?._id },
+          tweet: {
+            userSlug: user?.name,
+            body: tweet,
+            image: photo?._id,
+            tweetId,
+          },
           cookies,
         });
         if (response?._id) {
-          toast.success("Post enviado com sucesso!");
+          toast.success(
+            tweetId
+              ? "Resposta enviada com sucesso!"
+              : "Post enviado com sucesso!",
+          );
         }
       } catch (err) {}
       setTweet("");
@@ -119,11 +128,15 @@ export function TweetForm() {
             <Textarea
               value={tweet}
               onChange={(e) => setTweet(e.target.value)}
-              placeholder="Compartilhe seus momentos de beleza e autocuidado..."
+              placeholder={
+                tweetId
+                  ? "Escreva sua resposta..."
+                  : "Compartilhe seus momentos de beleza e autocuidado..."
+              }
               className="w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
               rows={3}
               maxLength={MAX_TWEET_LENGTH}
-              aria-label="Tweet content"
+              aria-label={tweetId ? "Reply content" : "Tweet content"}
             />
             <AnimatePresence>
               {image && (
@@ -223,8 +236,10 @@ export function TweetForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Postando...
+                {tweetId ? "Respondendo..." : "Postando..."}
               </>
+            ) : tweetId ? (
+              "Responder"
             ) : (
               "Postar"
             )}
