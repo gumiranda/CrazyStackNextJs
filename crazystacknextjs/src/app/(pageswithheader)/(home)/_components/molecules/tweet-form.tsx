@@ -216,8 +216,9 @@ export function TweetForm() {
         <div className="flex justify-end">
           <Button
             type="submit"
+            variant="default"
             disabled={tweet.trim().length === 0 || isOverLimit || isLoading}
-            className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200"
+            className="px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-200"
           >
             {isLoading ? (
               <>
