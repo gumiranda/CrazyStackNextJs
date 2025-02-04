@@ -240,11 +240,14 @@ export const ImageTweet = ({ image, removeImage }: any) => {
             exit={{ opacity: 0, scale: 0.8 }}
             className="relative mt-2"
           >
-            <img
-              src={image || "/placeholder.svg"}
-              alt="Uploaded preview"
-              className="max-w-full h-auto rounded-lg"
-            />
+            <div className="max-w-full max-h-[400px] overflow-hidden rounded-lg">
+              <img
+                src={image || "/placeholder.svg"}
+                alt="Uploaded preview"
+                className="w-full h-full object-contain"
+                style={{ maxHeight: "400px" }}
+              />
+            </div>
             <Button
               type="button"
               size="icon"
