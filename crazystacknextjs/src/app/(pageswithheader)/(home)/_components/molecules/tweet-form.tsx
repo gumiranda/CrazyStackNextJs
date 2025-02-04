@@ -229,7 +229,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
     </form>
   );
 }
-export const ImageTweet = ({ image, removeImage }) => {
+export const ImageTweet = ({ image, removeImage }: any) => {
   return (
     <>
       {image && (
