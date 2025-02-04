@@ -11,6 +11,7 @@ import { uploadPhoto } from "@/slices/belezix/entidades/photo/photo.api";
 import { addTweet } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import EmojiPicker from "./emoji-picker";
+import { toast } from "sonner";
 
 const MAX_TWEET_LENGTH = 280;
 
@@ -56,6 +57,9 @@ export function TweetForm() {
           tweet: { userSlug: user?.name, body: tweet, image: photo?._id },
           cookies,
         });
+        if (response?._id) {
+          toast.success("Post enviado com sucesso!");
+        }
       } catch (err) {}
       setTweet("");
       setImage(null);
@@ -216,10 +220,10 @@ export function TweetForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Tweeting...
+                Postando...
               </>
             ) : (
-              "Tweet"
+              "Postar"
             )}
           </Button>
         </div>
