@@ -60,15 +60,13 @@ export default async function Page() {
           className="flex flex-col w-full
       px-3 border-r-2 border-gray-900"
         >
-          <SubHeader />
+          <SubHeader />{" "}
           <HorizontalList
             title="Agendamentos"
             array={requests}
             type="appointment"
             widthCard={342}
           />
-        </section>
-        <section className="w-full lg:w-auto">
           <HorizontalList
             title="Novos"
             array={newOwners}
@@ -81,6 +79,16 @@ export default async function Page() {
             type="owner"
             widthCard={200}
           />
+        </section>
+        <section className="flex flex-col w-full">
+          <div className="m-10">
+            <h2 className="text-xl font-bold font-inter">Feed</h2>
+            <p>
+              Veja o que as pessoas estão falando sobre o Belezix e participe
+            </p>
+            <TweetForm />
+            <TweetList />
+          </div>
         </section>
       </main>
     </>
