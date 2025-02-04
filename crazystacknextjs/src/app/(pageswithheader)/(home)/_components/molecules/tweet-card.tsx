@@ -10,8 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Heart, MessageCircle, Repeat2, Share2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { TweetForm } from "./tweet-form";
 
-export const TweetCard = ({ tweet }: any) => {
+export const TweetCard = ({ tweet, canReply = true }: any) => {
+  const isReply = !!tweet?.tweetId;
   return (
     <Card key={tweet.id} className="w-full">
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
@@ -81,6 +83,11 @@ export const TweetCard = ({ tweet }: any) => {
           </Button>
         </div>
       </CardFooter>
+      {canReply && (
+        <div className="m-4 rounded-lg shadow-md max-w-2xl">
+          <TweetForm tweetId={tweet._id} />
+        </div>
+      )}
     </Card>
   );
 };

@@ -6,7 +6,10 @@ import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import { HorizontalList } from "../_components/templates/horizontal-list";
-import { TweetForm } from "./_components/molecules/tweet-form";
+import {
+  TweetForm,
+  TweetFormContainer,
+} from "./_components/molecules/tweet-form";
 import { TweetList } from "./_components/molecules/tweet-list";
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
@@ -56,11 +59,8 @@ export default async function Page() {
   return (
     <>
       <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-8xl">
-        <section
-          className="flex flex-col w-full justify-center
-      px-3 border-r-2 border-gray-900 max-w-4xl"
-        >
-          <div className="lg:mx-16 mb-10">
+        <section className="flex flex-col w-full px-3 border-r-2 border-gray-900 max-w-4xl">
+          <div className="lg:mx-16 my-5">
             <SubHeader />
             <HorizontalList
               title="Agendamentos"
@@ -90,7 +90,8 @@ export default async function Page() {
             <p>
               Veja o que as pessoas estão falando sobre o Belezix e participe
             </p>
-            <TweetForm />
+
+            <TweetFormContainer />
           </div>
           <div className="mx-10 lg:mx-16 flex flex-col items-center justify-center space-y-4">
             <TweetList />
