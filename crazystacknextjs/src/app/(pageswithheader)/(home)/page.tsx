@@ -58,7 +58,7 @@ export default async function Page() {
       <main className="min-h-screen flex flex-col md:flex-row justify-center mx-auto max-w-8xl">
         <section
           className="flex flex-col w-full justify-center
-      px-3 border-r-2 border-gray-900 max-w-2xl"
+      px-3 border-r-2 border-gray-900 max-w-4xl"
         >
           <div className="lg:mx-16 mb-10">
             <SubHeader />
