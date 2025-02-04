@@ -60,7 +60,7 @@ export default async function Page() {
     <>
       <main className="min-h-screen flex flex-col lg:flex-row justify-center mx-auto max-w-8xl">
         <section className="flex flex-col w-full px-3 border-r-2 border-gray-900 max-w-4xl">
-          <div className="lg:mx-16 my-5">
+          <div className="xl:mx-16 my-5">
             <SubHeader />
             <HorizontalList
               title="Agendamentos"
@@ -69,7 +69,7 @@ export default async function Page() {
               widthCard={342}
             />
           </div>
-          <div className="lg:mx-16">
+          <div className="xl:mx-16">
             <HorizontalList
               title="Novos"
               array={newOwners}
@@ -85,7 +85,7 @@ export default async function Page() {
           </div>
         </section>
         <section className="flex flex-col w-full max-w-6xl">
-          <div className="mx-10 lg:mx-16 my-10">
+          <div className="mx-10 xl:mx-16 my-10">
             <h2 className="text-xl font-bold font-inter">Feed</h2>
             <p>
               Veja o que as pessoas estão falando sobre o Belezix e participe
@@ -93,7 +93,7 @@ export default async function Page() {
 
             <TweetFormContainer />
           </div>
-          <div className="mx-10 lg:mx-16 flex flex-col items-center justify-center space-y-4">
+          <div className="mx-10 xl:mx-16 flex flex-col items-center justify-center space-y-4">
             <TweetList />
           </div>
         </section>
