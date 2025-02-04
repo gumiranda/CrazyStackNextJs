@@ -28,6 +28,7 @@ type User = {
   serviceIds?: string[];
   daysSinceRegister?: number;
   phone?: string;
+  userSlug?: string;
 };
 
 type AuthProviderProps = {

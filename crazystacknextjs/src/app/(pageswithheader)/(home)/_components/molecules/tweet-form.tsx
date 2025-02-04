@@ -1,32 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Image, Smile } from "lucide-react";
+import { Loader2, ImageIcon, Smile, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ca } from "date-fns/locale";
+import { parseCookies } from "nookies";
+import { uploadPhoto } from "@/slices/belezix/entidades/photo/photo.api";
+import { addTweet } from "@/slices/belezix/entidades/tweet/tweet.api";
+import { useAuth } from "@/shared/libs/contexts/AuthContext";
 
 const MAX_TWEET_LENGTH = 280;
 
 export function TweetForm() {
+  const { user } = useAuth();
+  console.log({ user });
   const [tweet, setTweet] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [image, setImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
     try {
-      // Simulating an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Tweet submitted:", tweet);
+      const cookies = parseCookies();
+      try {
+        let photo;
+        if (formDataImage) {
+          photo = await uploadPhoto({ formDataImage, cookies });
+        }
+        const response = await addTweet({
+          tweet: { userSlug: user?.name, body: tweet, image: photo?._id },
+          cookies,
+        });
+      } catch (err) {}
       setTweet("");
+      setImage(null);
     } catch (err) {
       setError("Failed to submit tweet. Please try again.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const formData = new FormData();
+
+    if (file) {
+      formData.append("file", file);
+      setFormDataImage(formData);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -56,16 +96,51 @@ export function TweetForm() {
               maxLength={MAX_TWEET_LENGTH}
               aria-label="Tweet content"
             />
+            <AnimatePresence>
+              {image && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="relative mt-2"
+                >
+                  <img
+                    src={image || "/placeholder.svg"}
+                    alt="Uploaded preview"
+                    className="max-w-full h-auto rounded-lg"
+                  />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="destructive"
+                    className="absolute top-2 right-2"
+                    onClick={removeImage}
+                    aria-label="Remove image"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div className="flex items-center justify-between">
               <div className="flex space-x-2">
                 <Button
                   type="button"
                   size="icon"
                   variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
                   aria-label="Add image"
                 >
-                  <Image className="w-4 h-4" />
+                  <ImageIcon className="w-4 h-4" />
                 </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                  className="hidden"
+                  aria-label="Upload image"
+                />
                 <Button
                   type="button"
                   size="icon"
