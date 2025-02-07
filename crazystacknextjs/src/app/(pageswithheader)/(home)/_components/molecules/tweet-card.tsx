@@ -20,6 +20,7 @@ export const TweetCard = ({
   tweet,
   canReply = false,
   handleChangeCanReply,
+  ref,
 }: any) => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -70,7 +71,7 @@ export const TweetCard = ({
   }, [isLiked, tweet?._id, user, toast]);
 
   return (
-    <Card key={tweet?._id} className="w-full">
+    <Card className="w-full" ref={ref}>
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
         <Avatar className="w-12 h-12">
           <AvatarImage
