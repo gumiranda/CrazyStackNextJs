@@ -9,15 +9,25 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Heart, MessageCircle, Repeat2, Share2 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
 import { TweetForm } from "./tweet-form";
+import { toggleLike } from "@/slices/belezix/entidades/tweet/tweet.api";
+import { useAuth } from "@/shared/libs/contexts/AuthContext";
+import { parseCookies } from "nookies";
+import { useState } from "react";
 
 export const TweetCard = ({
   tweet,
   canReply = false,
   handleChangeCanReply,
 }: any) => {
+  const { user } = useAuth();
   const isReply = !!tweet?.tweetId;
+  const [likePlus, setLikePlus] = useState(0);
+  const iLike = tweet?.tweetlike?.find?.(
+    (item) => item?.createdById === user?._id,
+  );
+  const [iLiked, setiLiked] = useState(iLike);
+  console.log(iLiked);
   return (
     <Card key={tweet?._id} className="w-full">
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
@@ -72,10 +82,17 @@ export const TweetCard = ({
             variant="ghost"
             size="sm"
             className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors"
-            onClick={() => {}}
+            onClick={async () => {
+              await toggleLike({
+                tweetlike: { tweetId: tweet?._id, userSlug: user?.slug },
+                cookies: parseCookies(),
+              });
+              setLikePlus((prev) => (iLiked ? prev - 1 : prev + 1));
+              setiLiked(!iLiked);
+            }}
           >
             <Heart className="w-5 h-5" />
-            <span>{tweet?.tweetlike?.total}</span>
+            <span>{Number(tweet?.tweetlike?.total ?? 0) + likePlus}</span>
           </Button>
         </div>
       </CardFooter>

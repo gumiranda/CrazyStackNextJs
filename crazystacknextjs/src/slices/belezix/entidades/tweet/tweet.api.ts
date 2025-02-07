@@ -23,6 +23,24 @@ export const addTweet = async ({ tweet, cookies }: any) => {
   }
   return null;
 };
+export const toggleLike = async ({ tweetlike, cookies }: any) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/tweetlike/toggleLike`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${cookies["belezixclient.token"]}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tweetlike),
+    },
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+  return null;
+};
 
 export const getTweets = async (
   page: number,

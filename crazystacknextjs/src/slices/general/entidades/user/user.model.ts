@@ -12,7 +12,7 @@ export type UserProps = {
   serviceIds?: string[];
   daysSinceRegister?: number;
   phone?: string;
-  userSlug?: string;
+  slug?: string;
 };
 
 class User {
@@ -26,8 +26,8 @@ class User {
   get _id(): string {
     return this.props._id;
   }
-  get userSlug(): string {
-    return this.props.userSlug ?? "";
+  get slug(): string {
+    return this.props.slug ?? "";
   }
   get name(): string {
     return this.props.name;
