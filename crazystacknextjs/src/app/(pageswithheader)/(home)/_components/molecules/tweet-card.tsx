@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +9,12 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Heart, MessageCircle, Repeat2, Share2 } from "lucide-react";
+import { Heart, MessageCircle, Repeat2 } from "lucide-react";
 import { TweetForm } from "./tweet-form";
 import { toggleLike } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { parseCookies } from "nookies";
-import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export const TweetCard = ({
   tweet,
@@ -21,13 +22,53 @@ export const TweetCard = ({
   handleChangeCanReply,
 }: any) => {
   const { user } = useAuth();
+  const { toast } = useToast();
   const isReply = !!tweet?.tweetId;
-  const [likePlus, setLikePlus] = useState(0);
-  const iLike = tweet?.tweetlike?.find?.(
-    (item: any) => item?.createdById === user?._id,
+  const [likeCount, setLikeCount] = useState(
+    Number(tweet?.tweetlike?.total ?? 0),
   );
-  const [iLiked, setiLiked] = useState(iLike);
-  console.log(iLiked);
+  const [isLiked, setIsLiked] = useState(
+    tweet?.tweetlike?.find?.((item: any) => item?.createdById === user?._id),
+  );
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
+
+  useEffect(() => {
+    setLikeCount(Number(tweet?.tweetlike?.total ?? 0));
+    setIsLiked(
+      tweet?.tweetlike?.find?.((item: any) => item?.createdById === user?._id),
+    );
+  }, [tweet, user]);
+
+  const handleLikeClick = useCallback(async () => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to like tweets.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLikeLoading(true);
+    try {
+      await toggleLike({
+        tweetlike: { tweetId: tweet?._id, userSlug: user?.slug },
+        cookies: parseCookies(),
+      });
+      setLikeCount((prev: any) => (isLiked ? prev - 1 : prev + 1));
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update like status. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLikeLoading(false);
+    }
+  }, [isLiked, tweet?._id, user, toast]);
+
   return (
     <Card key={tweet?._id} className="w-full">
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
@@ -81,18 +122,20 @@ export const TweetCard = ({
           <Button
             variant="ghost"
             size="sm"
-            className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors"
-            onClick={async () => {
-              await toggleLike({
-                tweetlike: { tweetId: tweet?._id, userSlug: user?.slug },
-                cookies: parseCookies(),
-              });
-              setLikePlus((prev) => (iLiked ? prev - 1 : prev + 1));
-              setiLiked(!iLiked);
-            }}
+            className={`flex items-center space-x-2 transition-colors ${
+              isLiked
+                ? "text-red-500 hover:text-red-600"
+                : "text-gray-500 hover:text-red-500"
+            }`}
+            onClick={handleLikeClick}
+            disabled={isLikeLoading}
           >
-            <Heart className="w-5 h-5" />
-            <span>{Number(tweet?.tweetlike?.total ?? 0) + likePlus}</span>
+            <Heart
+              className={`w-5 h-5 transition-transform duration-300 ${
+                isLiked ? "fill-current scale-110" : ""
+              }`}
+            />
+            <span className="font-semibold">{likeCount}</span>
           </Button>
         </div>
       </CardFooter>
