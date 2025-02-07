@@ -33,14 +33,18 @@ export const getTweets = async (
   if (!apiClient) {
     throw new Error("API client is null");
   }
-  const { data } = await apiClient.get("/tweet/loadByPage", {
-    params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
-  });
+  const { data } = await apiClient.get(
+    !ctx ? "publictweet/loadByPage" : "/tweet/loadByPage",
+    {
+      params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
+    },
+  );
   const { tweets, total } = data || {};
   const totalCount = Number(total ?? 0);
   const lastPage = Number.isInteger(totalCount / registerByPage)
     ? totalCount / registerByPage
     : Math.floor(totalCount / registerByPage) + 1;
+  console.log({ tweets });
   const response = {
     tweets: tweets?.map?.((props: TweetProps) => tweetModel(props).format()),
     totalCount,

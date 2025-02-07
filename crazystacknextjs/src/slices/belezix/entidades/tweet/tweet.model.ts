@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from "date-fns";
+
 export type TweetProps = {
   _id: string;
   userSlug: string;
@@ -8,6 +10,23 @@ export type TweetProps = {
   updatedAt: string;
   active: boolean;
   createdById: string;
+  retweets: number;
+  distanceNow: string;
+  createdBy: {
+    slug: string;
+    photo: string;
+    name: string;
+  };
+  tweetlike: {
+    tweetlikes: {
+      _id: string;
+      createdById: string;
+      userSlug: string;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+    total: number;
+  };
 };
 
 class Tweet {
@@ -39,6 +58,32 @@ class Tweet {
   get createdById(): string {
     return this.props.createdById;
   }
+  get retweets(): number {
+    return this.props.retweets;
+  }
+  get distanceNow(): string {
+    return this.props.distanceNow;
+  }
+
+  get createdBy(): {
+    slug: string;
+    photo: string;
+    name: string;
+  } {
+    return this.props.createdBy;
+  }
+  get tweetlike(): {
+    tweetlikes: {
+      _id: string;
+      createdById: string;
+      userSlug: string;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+    total: number;
+  } {
+    return this.props.tweetlike;
+  }
 
   get createdAt(): string {
     return this.props.createdAt;
@@ -54,6 +99,9 @@ class Tweet {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
+      }),
+      distanceNow: formatDistanceToNow(new Date(this.props.createdAt), {
+        addSuffix: true,
       }),
     };
   }

@@ -11,6 +11,7 @@ import {
   TweetFormContainer,
 } from "./_components/molecules/tweet-form";
 import { TweetList } from "./_components/molecules/tweet-list";
+import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
   description: `Página de inicial do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,
@@ -41,6 +42,18 @@ async function handleRequests(cookies: any) {
     return { requests: [], totalCount: 0 };
   }
 }
+async function handleTweets(cookies: any) {
+  try {
+    const { tweets, totalCount = 0 } = await getTweets(1, cookies, {
+      sortBy: "createdAt",
+      typeSort: "desc",
+      tweetId: "null",
+    });
+    return { tweets, totalCount };
+  } catch (error: any) {
+    return { requests: [], totalCount: 0 };
+  }
+}
 export default async function Page() {
   const cookies = await getParsedCookies();
   const popularOwners = await getOwnersPublic(1, cookies, {
@@ -51,11 +64,13 @@ export default async function Page() {
     sortBy: "createdAt",
     typeSort: "desc",
   });
+
   const owners = Array.isArray(popularOwners?.owners)
     ? popularOwners?.owners
     : [];
   const newOwners = Array.isArray(lastOwners?.owners) ? lastOwners?.owners : [];
-  const { requests, totalCount } = await handleRequests(cookies); //lg:max-w-xl xl:max-w-6xl 2xl:max-w-8xl
+  const { requests, totalCount } = await handleRequests(cookies);
+  const { tweets, totalCount: countTweets } = await handleTweets(cookies);
   return (
     <>
       <main className="min-h-screen flex flex-col xl:flex-row justify-center mx-auto">
@@ -94,7 +109,7 @@ export default async function Page() {
             <TweetFormContainer />
           </div>
           <div className="mx-10 xl:mx-16 flex flex-col items-center justify-center space-y-4">
-            <TweetList />
+            <TweetList initialTweets={tweets} countTweets={countTweets} />
           </div>
         </section>
       </main>

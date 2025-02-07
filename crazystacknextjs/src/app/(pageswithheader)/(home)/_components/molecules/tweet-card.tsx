@@ -19,29 +19,30 @@ export const TweetCard = ({
 }: any) => {
   const isReply = !!tweet?.tweetId;
   return (
-    <Card key={tweet.id} className="w-full">
+    <Card key={tweet?._id} className="w-full">
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
         <Avatar className="w-12 h-12">
-          <AvatarImage src={tweet.user.avatar} alt={tweet.user.name} />
-          <AvatarFallback>{tweet.user.name.charAt(0)}</AvatarFallback>
+          <AvatarImage
+            src={tweet?.createdBy?.photo}
+            alt={tweet?.createdBy?.name}
+          />
+          <AvatarFallback>{tweet?.createdBy?.slug?.charAt?.(0)}</AvatarFallback>
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-lg">{tweet.user.name}</h3>
-              <p className="text-sm text-gray-500">{tweet.user.handle}</p>
+              <h3 className="font-bold text-lg">@{tweet?.createdBy?.slug}</h3>
+              <p className="text-sm text-gray-500">{tweet?.createdBy?.name}</p>
             </div>
-            <p className="text-sm text-gray-500">
-              {formatDistanceToNow(tweet.createdAt, { addSuffix: true })}
-            </p>
+            <p className="text-sm text-gray-500">{tweet?.distanceNow}</p>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 text-lg leading-relaxed">{tweet.content}</p>
-        {tweet.image && (
+        <p className="mb-4 text-lg leading-relaxed">{tweet?.body}</p>
+        {tweet?.image && (
           <img
-            src={tweet.image || "/placeholder.svg"}
+            src={tweet?.image || "/placeholder.svg"}
             alt="Tweet image"
             className="w-full rounded-lg mb-4 object-cover h-64"
           />
@@ -56,7 +57,7 @@ export const TweetCard = ({
             onClick={() => handleChangeCanReply({ tweet })}
           >
             <MessageCircle className="w-5 h-5" />
-            <span>{tweet.replies}</span>
+            <span>{tweet?.replies}</span>
           </Button>
           <Button
             variant="ghost"
@@ -65,7 +66,7 @@ export const TweetCard = ({
             onClick={() => {}}
           >
             <Repeat2 className="w-5 h-5" />
-            <span>{tweet.retweets}</span>
+            <span>{tweet?.retweets}</span>
           </Button>
           <Button
             variant="ghost"
@@ -74,13 +75,13 @@ export const TweetCard = ({
             onClick={() => {}}
           >
             <Heart className="w-5 h-5" />
-            <span>{tweet.likes}</span>
+            <span>{tweet?.tweetlike?.total}</span>
           </Button>
         </div>
       </CardFooter>
       {canReply && (
         <div className="m-4 rounded-lg shadow-md max-w-2xl">
-          <TweetForm tweetId={tweet._id} />
+          <TweetForm tweetId={tweet?._id} />
         </div>
       )}
     </Card>
