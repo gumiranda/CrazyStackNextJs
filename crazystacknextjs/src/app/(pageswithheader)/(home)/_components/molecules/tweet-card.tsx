@@ -91,7 +91,12 @@ export const TweetCard = ({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 text-lg leading-relaxed">{tweet?.body}</p>
+        <p
+          className="mb-4 text-lg leading-relaxed line-clamp-6"
+          style={{ wordBreak: "break-word" }}
+        >
+          {tweet?.body}
+        </p>
         {tweet?.image && (
           <img
             src={tweet?.image || "/placeholder.svg"}

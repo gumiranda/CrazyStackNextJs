@@ -109,7 +109,10 @@ export default async function Page() {
             <TweetFormContainer />
           </div>
           <div className="mx-10 xl:mx-16 flex flex-col items-center justify-center space-y-4">
-            <TweetList initialTweets={tweets} countTweets={countTweets} />
+            <TweetList
+              initialTweets={tweets as any}
+              countTweets={countTweets}
+            />
           </div>
         </section>
       </main>

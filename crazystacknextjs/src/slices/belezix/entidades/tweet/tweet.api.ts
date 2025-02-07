@@ -62,7 +62,6 @@ export const getTweets = async (
   const lastPage = Number.isInteger(totalCount / registerByPage)
     ? totalCount / registerByPage
     : Math.floor(totalCount / registerByPage) + 1;
-  console.log({ tweets });
   const response = {
     tweets: tweets?.map?.((props: TweetProps) => tweetModel(props).format()),
     totalCount,

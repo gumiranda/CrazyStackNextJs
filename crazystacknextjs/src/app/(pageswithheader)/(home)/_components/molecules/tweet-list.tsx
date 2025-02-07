@@ -4,15 +4,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { TweetCard } from "./tweet-card";
 import type { TweetProps } from "@/slices/belezix/entidades/tweet/tweet.model";
 import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
+import { parseCookies } from "nookies";
 
 export function TweetList({
   initialTweets,
   countTweets,
-  cookies,
 }: {
-  initialTweets: TweetProps[];
+  initialTweets: any[];
   countTweets: number;
-  cookies: any;
 }) {
   const [tweets, setTweets] = useState(initialTweets);
   const [canReply, setCanReply] = useState<TweetProps | null>(null);
@@ -46,6 +45,7 @@ export function TweetList({
       if (loading || tweets.length >= countTweets) return;
       setLoading(true);
       try {
+        const cookies = parseCookies();
         const { tweets: newTweets } = await getTweets(page, cookies, {
           sortBy: "createdAt",
           typeSort: "desc",
@@ -64,7 +64,7 @@ export function TweetList({
     if (page > 1) {
       loadMoreTweets();
     }
-  }, [page, cookies, loading, tweets.length, countTweets]);
+  }, [page, loading, tweets.length, countTweets]);
 
   return (
     <>
