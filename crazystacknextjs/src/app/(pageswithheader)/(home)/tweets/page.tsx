@@ -54,11 +54,7 @@ export default async function Page() {
             <TweetFormContainer />
           </div>
           <div className="mx-10 xl:mx-16 flex flex-col items-center justify-center space-y-4">
-            <TweetList
-              initialTweets={tweets}
-              countTweets={countTweets}
-              cookies={cookies}
-            />
+            <TweetList initialTweets={tweets} countTweets={countTweets} />
           </div>
         </section>
       </main>
