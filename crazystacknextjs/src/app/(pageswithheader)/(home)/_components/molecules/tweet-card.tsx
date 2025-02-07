@@ -24,7 +24,7 @@ export const TweetCard = ({
   const isReply = !!tweet?.tweetId;
   const [likePlus, setLikePlus] = useState(0);
   const iLike = tweet?.tweetlike?.find?.(
-    (item) => item?.createdById === user?._id,
+    (item: any) => item?.createdById === user?._id,
   );
   const [iLiked, setiLiked] = useState(iLike);
   console.log(iLiked);
