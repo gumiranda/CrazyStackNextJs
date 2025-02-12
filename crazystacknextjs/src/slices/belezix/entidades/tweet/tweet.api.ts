@@ -1,5 +1,6 @@
-import { setupAPIClient } from "@/shared/api";
+import { api, setupAPIClient } from "@/shared/api";
 import { TweetProps, tweetModel } from "./tweet.model";
+import axios from "axios";
 export type GetTweetsResponse = {
   tweets: TweetProps[];
   totalCount: number;
@@ -47,9 +48,13 @@ export const getTweets = async (
   ctx: any,
   params: any = {},
 ): Promise<GetTweetsResponse> => {
-  const apiClient = setupAPIClient(ctx);
+  let apiClient = setupAPIClient(ctx);
+
   if (!apiClient) {
-    throw new Error("API client is null");
+    apiClient = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+    });
+    //    throw new Error("API client is null");
   }
   const { data } = await apiClient.get(
     !ctx ? "publictweet/loadByPage" : "/tweet/loadByPage",

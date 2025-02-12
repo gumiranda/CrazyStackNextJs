@@ -41,16 +41,14 @@ async function handleRequests(cookies: any) {
 }
 async function handleTweets(cookies: any) {
   try {
-    const { tweets, totalCount = 0 } = !cookies
-      ? { tweets: [], totalCount: 0 }
-      : await getTweets(1, cookies, {
-          sortBy: "createdAt",
-          typeSort: "desc",
-          tweetId: "null",
-        });
+    const { tweets = [], totalCount = 0 } = await getTweets(1, cookies, {
+      sortBy: "createdAt",
+      typeSort: "desc",
+      tweetId: "null",
+    });
     return { tweets, totalCount };
   } catch (error: any) {
-    return { requests: [], totalCount: 0 };
+    return { tweets: [], totalCount: 0 };
   }
 }
 export default async function Page() {
