@@ -6,10 +6,7 @@ import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import { HorizontalList } from "../_components/templates/horizontal-list";
-import {
-  TweetForm,
-  TweetFormContainer,
-} from "./_components/molecules/tweet-form";
+import { TweetFormContainer } from "./_components/molecules/tweet-form";
 import { TweetList } from "./_components/molecules/tweet-list";
 import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
 export const metadata: Metadata = {
@@ -44,11 +41,13 @@ async function handleRequests(cookies: any) {
 }
 async function handleTweets(cookies: any) {
   try {
-    const { tweets, totalCount = 0 } = await getTweets(1, cookies, {
-      sortBy: "createdAt",
-      typeSort: "desc",
-      tweetId: "null",
-    });
+    const { tweets, totalCount = 0 } = !cookies
+      ? { tweets: [], totalCount: 0 }
+      : await getTweets(1, cookies, {
+          sortBy: "createdAt",
+          typeSort: "desc",
+          tweetId: "null",
+        });
     return { tweets, totalCount };
   } catch (error: any) {
     return { requests: [], totalCount: 0 };
@@ -105,7 +104,6 @@ export default async function Page() {
             <p>
               Veja o que as pessoas estão falando sobre o Belezix e participe
             </p>
-
             <TweetFormContainer />
           </div>
           <div className="mx-10 xl:mx-16 flex flex-col items-center justify-center space-y-4">
