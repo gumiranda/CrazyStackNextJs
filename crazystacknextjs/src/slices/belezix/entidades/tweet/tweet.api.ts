@@ -1,4 +1,4 @@
-import { api, setupAPIClient } from "@/shared/api";
+import { api, getAxios, setupAPIClient } from "@/shared/api";
 import { TweetProps, tweetModel } from "./tweet.model";
 import axios from "axios";
 export type GetTweetsResponse = {
@@ -48,16 +48,10 @@ export const getTweets = async (
   ctx: any,
   params: any = {},
 ): Promise<GetTweetsResponse> => {
-  let apiClient = setupAPIClient(ctx);
-
-  if (!apiClient) {
-    apiClient = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-    });
-    //    throw new Error("API client is null");
-  }
-  const { data } = await apiClient.get(
-    !ctx ? "publictweet/loadByPage" : "/tweet/loadByPage",
+  const { data } = await getAxios(ctx?.["belezixclient.token"]).get(
+    !ctx?.["belezixclient.token"]
+      ? "publictweet/loadByPage"
+      : "/tweet/loadByPage",
     {
       params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
     },
