@@ -67,8 +67,8 @@ export default async function Page({
             <ChevronLeftIcon />
           </Link>
         </Button>
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-          <Avatar className="w-24 h-24 border-4 border-background">
+        <div className="absolute mb-8 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+          <Avatar className="w-48 h-48 border-4 border-background">
             <AvatarImage src={owner?.place?.profilephoto} alt={owner.name} />
             <AvatarFallback>{owner.name.charAt(0)}</AvatarFallback>
           </Avatar>
