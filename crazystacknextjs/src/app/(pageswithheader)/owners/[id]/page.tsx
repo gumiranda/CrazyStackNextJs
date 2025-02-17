@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ChevronLeftIcon, MapPinIcon, StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PhoneItem } from "@/shared/ui/molecules";
 import { getOwnerByIdPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { whitelabel } from "@/application/whitelabel";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Detalhes do Estabelecimento`,
   description: `Página de detalhes de estabelecimentos do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,
 };
+
 async function getParsedCookies() {
   const cookies = await getCookies();
   if (!cookies) {
@@ -25,6 +27,7 @@ async function getParsedCookies() {
   }
   return parsedCookies;
 }
+
 export default async function Page({
   params,
 }: {
@@ -40,7 +43,9 @@ export default async function Page({
   if (!owner) {
     return null;
   }
+
   return (
+    //<div className="max-w-4xl mx-auto">
     <div>
       <div className="relative h-[250px] w-full">
         <Image
@@ -54,7 +59,7 @@ export default async function Page({
         />
         <Button
           variant="secondary"
-          className="absolute top-4 left-4"
+          className="absolute top-4 left-4 z-10"
           size="icon"
           asChild
         >
@@ -62,8 +67,14 @@ export default async function Page({
             <ChevronLeftIcon />
           </Link>
         </Button>
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+          <Avatar className="w-24 h-24 border-4 border-background">
+            <AvatarImage src={owner?.place?.profilephoto} alt={owner.name} />
+            <AvatarFallback>{owner.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </div>
       </div>
-      <div className="border-b border-solid p-5">
+      <div className="border-b border-solid p-5 pt-16">
         <h1 className="mb-3 text-xl font-bold">{owner.name}</h1>
         <div className="mb-2 flex items-center gap-2">
           <MapPinIcon className="text-primary" size={18} />
