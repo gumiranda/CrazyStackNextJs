@@ -111,7 +111,17 @@ export const TweetCard = ({
             variant="ghost"
             size="sm"
             className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors"
-            onClick={() => handleChangeCanReply({ tweet })}
+            onClick={() => {
+              if (!user) {
+                toast({
+                  title: "Authentication required",
+                  description: "Please log in to reply tweets.",
+                  variant: "destructive",
+                });
+                return;
+              }
+              handleChangeCanReply({ tweet });
+            }}
           >
             <MessageCircle className="w-5 h-5" />
             <span>{tweet?.replies}</span>
