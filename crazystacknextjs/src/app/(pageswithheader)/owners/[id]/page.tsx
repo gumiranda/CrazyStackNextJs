@@ -46,7 +46,7 @@ export default async function Page({
         <Image
           alt={owner.name}
           src={
-            owner?.imageUrl ??
+            owner?.place?.cover ??
             "https://images.unsplash.com/photo-1619367901998-73b3a70b3898?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
           fill
@@ -67,7 +67,7 @@ export default async function Page({
         <h1 className="mb-3 text-xl font-bold">{owner.name}</h1>
         <div className="mb-2 flex items-center gap-2">
           <MapPinIcon className="text-primary" size={18} />
-          <p className="text-sm">{owner?.address ?? "Sem endereço"}</p>
+          <p className="text-sm">{owner?.place?.address ?? "Sem endereço"}</p>
         </div>
         <div className="flex items-center gap-2">
           <StarIcon className="fill-primary text-primary" size={18} />
@@ -76,7 +76,14 @@ export default async function Page({
       </div>
       <div className="space-y-2 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
-        <p className="text-sm">{owner?.description ?? "Não tem descrição"}</p>
+        <p className="text-sm">
+          {owner?.description ??
+            owner?.place?.description ??
+            "Não tem descrição"}
+        </p>
+      </div>
+      <div className="space-y-3 p-5">
+        {owner?.place?.phone && <PhoneItem phone={owner?.place?.phone} />}
       </div>
       <div className="space-y-2 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
@@ -91,13 +98,6 @@ export default async function Page({
           ))}
         </div>
       </div>
-      {owner?.phones?.length > 0 && (
-        <div className="space-y-3 p-5">
-          {owner?.phones?.map?.((phone: any) => (
-            <PhoneItem key={phone} phone={phone} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
