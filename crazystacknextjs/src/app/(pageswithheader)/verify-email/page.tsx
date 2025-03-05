@@ -1,5 +1,5 @@
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import type { Metadata } from "next";
 import { FallbackEmailVerified } from "./_components/FallbackEmailVerified";
 import { CheckCircle } from "lucide-react";
@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { verifyEmail } from "@/shared/libs/contexts/verify-email";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Estabelecimentos`,

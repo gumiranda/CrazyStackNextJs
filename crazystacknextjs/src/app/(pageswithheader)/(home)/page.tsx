@@ -1,7 +1,7 @@
 import { SubHeader } from "./_components/organisms/subheader";
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
@@ -9,6 +9,7 @@ import { HorizontalList } from "../_components/templates/horizontal-list";
 import { TweetFormContainer } from "./_components/molecules/tweet-form";
 import { TweetList } from "./_components/molecules/tweet-list";
 import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
+import { getCookies } from "@/shared/libs/utils/cookies";
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
   description: `Página de inicial do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,

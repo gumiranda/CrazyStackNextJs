@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { TweetFormContainer } from "../_components/molecules/tweet-form";

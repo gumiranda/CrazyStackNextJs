@@ -8,8 +8,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PhoneItem } from "@/shared/ui/molecules";
 import { getOwnerByIdPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import { AppointmentService } from "../_components/appointment-service";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Detalhes do Estabelecimento`,
