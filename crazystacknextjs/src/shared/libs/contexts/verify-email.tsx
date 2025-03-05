@@ -1,5 +1,3 @@
-import { api } from "@/shared/api";
-
 export const verifyEmail = async ({
   email,
   token,
@@ -7,13 +5,19 @@ export const verifyEmail = async ({
   email: string;
   token: string;
 }) => {
-  if (!api) {
-    throw new Error("API is not initialized");
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email?email=${email}&code=${token}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, code: token }),
+    },
+  );
+  if (!response.ok) {
+    return;
   }
-  console.log({ email, token });
-  const response = await api.post("auth/verify-email", {
-    email,
-    code: token,
-  });
-  return response;
+  const data = await response.json();
+  return data;
 };

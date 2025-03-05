@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { verifyEmail } from "@/shared/libs/contexts/verify-email";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Estabelecimentos`,
@@ -42,7 +44,7 @@ export default async function Page({
   if (!result) return <FallbackEmailVerified email={email} />;
   console.log({ result });
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+    <div className="flex justify-center items-center min-h-screen p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Email Verification</CardTitle>
@@ -56,18 +58,17 @@ export default async function Page({
               </AlertDescription>
             </Alert>
           )}
-
           {result ? (
             <div className="flex flex-col items-center justify-center py-8">
               <CheckCircle className="h-12 w-12 text-green-500 mb-4" />
-              <p className="text-center text-gray-700 font-medium">
+              <p className="text-center text-muted-foreground font-medium">
                 Email verified successfully!
               </p>
-              <p className="text-center text-gray-500 mt-2">
-                Redirecting to sign in...
-              </p>
+              <Button asChild variant={"secondary"} className="mt-4">
+                <Link href="/">Continue to Home</Link>
+              </Button>
             </div>
-          ) : null}
+          ) : null}{" "}
         </CardContent>
       </Card>
     </div>
@@ -83,8 +84,7 @@ async function handleEmailVerification({
   try {
     if (!email || !token) return null;
     const result = await verifyEmail({ email, token });
-    console.log(result);
-    return result?.data;
+    return result;
   } catch (error) {
     console.log(error);
     return null;

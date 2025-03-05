@@ -15,6 +15,7 @@ import { Loader2, Mail } from "lucide-react";
 
 // Add missing Link import
 import Link from "next/link";
+import { api } from "@/shared/api";
 export function FallbackEmailVerified({ email = "" }) {
   const [isResending, setIsResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,21 +27,11 @@ export function FallbackEmailVerified({ email = "" }) {
     setResendSuccess(false);
 
     try {
-      const response = await fetch("/api/auth/resend-verification", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to resend verification email");
+      if (!api) {
+        throw new Error("API instance is not available");
       }
-
-      setResendSuccess(true);
+      const response = await api.post("/auth/resend-email", { email });
+      setResendSuccess(!!response?.data);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unexpected error occurred",
