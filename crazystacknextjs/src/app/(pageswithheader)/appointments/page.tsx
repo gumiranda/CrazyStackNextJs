@@ -53,13 +53,15 @@ export default async function Page() {
     cookies,
   } = appointments;
   return (
-    <AppointmentsList
-      initialConfirmedAppointments={confirmedAppointments}
-      initialConcludedAppointments={concludedAppointments}
-      confirmedTotalCount={confirmedTotalCount}
-      concludedTotalCount={concludedTotalCount}
-      cookies={cookies}
-    />
+    <main className="max-w-4xl mx-auto">
+      <AppointmentsList
+        initialConfirmedAppointments={confirmedAppointments}
+        initialConcludedAppointments={concludedAppointments}
+        confirmedTotalCount={confirmedTotalCount}
+        concludedTotalCount={concludedTotalCount}
+        cookies={cookies}
+      />
+    </main>
   );
 }
 async function getParsedCookies() {

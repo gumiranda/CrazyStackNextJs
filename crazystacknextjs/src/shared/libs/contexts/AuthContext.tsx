@@ -28,6 +28,7 @@ type User = {
   serviceIds?: string[];
   daysSinceRegister?: number;
   phone?: string;
+  slug?: string;
 };
 
 type AuthProviderProps = {
@@ -276,4 +277,20 @@ const formatMessage = (message: string) => {
     default:
       return message;
   }
+};
+export const verifyEmail = async ({
+  email,
+  token,
+}: {
+  email: string;
+  token: string;
+}) => {
+  if (!api) {
+    throw new Error("API is not initialized");
+  }
+  const response = await api.post("auth/verify-email", {
+    email,
+    token,
+  });
+  return response;
 };

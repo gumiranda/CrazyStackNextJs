@@ -29,6 +29,7 @@ async function handleOwners(filter: any) {
       cookies,
       filter,
     );
+
     return { owners, totalCount };
   } catch (error) {
     return null;
