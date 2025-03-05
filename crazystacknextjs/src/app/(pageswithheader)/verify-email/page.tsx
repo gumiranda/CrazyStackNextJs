@@ -1,5 +1,4 @@
 import { whitelabel } from "@/application/whitelabel";
-import { verifyEmail } from "@/shared/libs/contexts/AuthContext";
 import { getCookies, parseCookies } from "@/shared/libs/utils";
 import type { Metadata } from "next";
 import { FallbackEmailVerified } from "./_components/FallbackEmailVerified";
@@ -12,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { verifyEmail } from "@/shared/libs/contexts/verify-email";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Estabelecimentos`,
@@ -83,8 +83,10 @@ async function handleEmailVerification({
   try {
     if (!email || !token) return null;
     const result = await verifyEmail({ email, token });
-    return result;
+    console.log(result);
+    return result?.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }

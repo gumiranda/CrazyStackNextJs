@@ -24,7 +24,12 @@ export const EmailPasswordForm = ({
 }: EmailPasswordFormProps) => {
   const { t } = useTranslation(["PAGES"]);
   return (
-    <form onSubmit={handleSubmit(handleSignUp)}>
+    <form
+      id="signup"
+      onSubmit={handleSubmit(handleSignUp, (e) => {
+        console.log(e);
+      })}
+    >
       <div className="grid gap-4">
         <FormField
           label={t("PAGES:AUTH_PAGE.name", { defaultValue: "Nome" })}
@@ -51,7 +56,7 @@ export const EmailPasswordForm = ({
         <PhoneInput
           label={t("PAGES:AUTH_PAGE.phone", { defaultValue: "Telefone" })}
           id="phone"
-          type="tel"
+          //type="tel"
           formProps={formProps}
         />
         <FormField
@@ -79,7 +84,12 @@ export const EmailPasswordForm = ({
           error={formState.errors.passwordConfirmation?.message?.toString()}
         />
 
-        <Button disabled={formState.isSubmitting} className="mt-2">
+        <Button
+          form="signup"
+          type="submit"
+          disabled={formState.isSubmitting}
+          className="mt-2"
+        >
           {formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
