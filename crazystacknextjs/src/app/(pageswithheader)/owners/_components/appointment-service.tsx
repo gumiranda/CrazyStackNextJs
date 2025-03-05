@@ -1,5 +1,5 @@
 "use client";
-import { SignInDiv } from "@/app/login/_components/signin-div";
+import { SignInDiv } from "@/app/(auth)/login/_components/signin-div";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { AppointmentDialog } from "@/slices/belezix/entidades/appointment/ui/organisms";
