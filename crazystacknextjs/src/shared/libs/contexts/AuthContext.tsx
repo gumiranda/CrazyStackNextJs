@@ -178,6 +178,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     cpf,
     cnpj,
     cnpjActive,
+    coord = { type: "Point", coordinates: [0, 0] },
   }: SignupCredentials) => {
     try {
       setLoading(true);
@@ -191,10 +192,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         passwordConfirmation: password,
         name,
         phone,
-        coord: {
-          lat: 0,
-          lng: 0,
-        },
+        coord,
         role: "client",
         cpf: cnpjActive ? null : cpf,
         cnpj: cnpjActive ? cnpj : null,

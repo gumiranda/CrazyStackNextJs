@@ -1,5 +1,5 @@
 export function getCurrentPosition(
-  options?: PositionOptions
+  options?: PositionOptions,
 ): Promise<{ lat: number; lng: number }> {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
@@ -9,7 +9,7 @@ export function getCurrentPosition(
           lng: position.coords.longitude,
         }),
       (error) => reject(error),
-      options
+      options,
     );
   });
 }

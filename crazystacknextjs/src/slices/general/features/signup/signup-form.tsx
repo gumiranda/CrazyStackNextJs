@@ -12,7 +12,6 @@ interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { formState, handleSubmit, register, handleSignUp, formProps } =
     useSignUp();
-
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <EmailPasswordForm

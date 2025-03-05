@@ -1,12 +1,7 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  parsePhoneNumberFromString,
-  AsYouType,
-  isValidPhoneNumber,
-  CountryCode,
-} from "libphonenumber-js";
+import { isValidPhoneNumber, CountryCode } from "libphonenumber-js";
 
 export interface SignUpFormData {
   email: string;
@@ -15,9 +10,10 @@ export interface SignUpFormData {
   name: string;
   phone: string;
   country: {
-    code: string;
-    phone: string;
+    code?: string;
+    phone?: string;
   };
+  coord: any;
 }
 
 export type SubmitSignUpHandler = SubmitHandler<SignUpFormData>;
@@ -31,8 +27,12 @@ export const signupSchema = yup.object({
     .required("Confirmação de senha é obrigatória"),
   name: yup.string().required("Nome é obrigatório"),
   country: yup.object({
-    code: yup.string().required("País é obrigatório"),
-    phone: yup.string().required("DDD é obrigatório"),
+    code: yup.string(),
+    phone: yup.string(),
+  }),
+  coord: yup.object({
+    type: yup.string(),
+    coordinates: yup.array().of(yup.number()),
   }),
   phone: yup
     .string()
@@ -54,6 +54,16 @@ export type YupSchema = yup.InferType<typeof signupSchema>;
 export const useSignUpLib = () => {
   const formProps = useForm<SignUpFormData>({
     resolver: yupResolver(signupSchema),
+    defaultValues: {
+      country: {
+        code: "BR",
+        phone: "55",
+      },
+      coord: {
+        type: "Point",
+        coordinates: [0, 0],
+      },
+    },
   });
   return formProps;
 };
