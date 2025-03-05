@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Mail } from "lucide-react";
-
-// Add missing Link import
 import Link from "next/link";
 import { api } from "@/shared/api";
 export function FallbackEmailVerified({ email = "" }) {
