@@ -17,8 +17,8 @@ import Link from "next/link";
 import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
-  title: `${whitelabel.systemName} | Estabelecimentos`,
-  description: `Página de listagem de estabelecimentos do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,
+  title: `${whitelabel.systemName} | Verificar email`,
+  description: `Página de verificar email do ${whitelabel.systemName}. Aqui você pode verificar seu email.`,
 };
 async function getParsedCookies() {
   const cookies = await getCookies();
@@ -45,7 +45,7 @@ export default async function Page({
   if (!result) return <FallbackEmailVerified email={email} />;
   console.log({ result });
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
+    <div className="flex justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Email Verification</CardTitle>
