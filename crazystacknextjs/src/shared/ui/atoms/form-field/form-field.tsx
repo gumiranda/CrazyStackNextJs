@@ -1,7 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-// Molecules
 interface FormFieldProps {
   label: string;
   id: string;
@@ -22,15 +21,13 @@ export const FormField = ({
   error,
 }: FormFieldProps) => (
   <div className="grid gap-3">
-    <Label htmlFor={id} className="sr-only">
-      {label}
-    </Label>
+    <Label htmlFor={id}>{label}</Label>
     <Input
       id={id}
       placeholder={placeholder}
       type={type}
       autoCapitalize="none"
-      autoComplete={type}
+      autoComplete={type === "password" ? "new-password" : type}
       autoCorrect="off"
       disabled={disabled}
       {...register(id)}

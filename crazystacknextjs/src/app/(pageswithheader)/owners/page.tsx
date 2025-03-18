@@ -1,9 +1,10 @@
 import { Search } from "../_components/molecules/search";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
 import { OwnerItem } from "@/slices/belezix/entidades/owner/ui/owner-item";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Estabelecimentos`,
@@ -29,6 +30,7 @@ async function handleOwners(filter: any) {
       cookies,
       filter,
     );
+
     return { owners, totalCount };
   } catch (error) {
     return null;

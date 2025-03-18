@@ -5,6 +5,7 @@ import { WebSocketProvider } from "@/application/providers/webSocketProvider";
 import { AuthProvider } from "@/shared/libs/contexts/AuthContext";
 import { UiProvider } from "@/shared/libs/contexts/UiContext";
 import { Toaster } from "sonner";
+import { Toaster as ToasterShadcn } from "@/components/ui/toaster";
 
 export type AllProviderProps = {
   children: any;
@@ -27,6 +28,7 @@ export const AllProviders = ({ children }: AllProviderProps) => {
             <AuthProvider>
               <WebSocketProvider>
                 {children} <Toaster />
+                <ToasterShadcn />
               </WebSocketProvider>
             </AuthProvider>
           </UiProvider>
