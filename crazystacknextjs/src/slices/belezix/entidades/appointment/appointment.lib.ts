@@ -23,7 +23,7 @@ export const useGetTimeAvailables = (
   params?: any,
 ): any => {
   return useQuery({
-    queryKey: ["useGetTimeAvailables"],
+    queryKey: ["useGetTimeAvailables", params],
     queryFn: () => getTimeAvailables(params, null),
     staleTime: 1000 * 5,
     ...options,

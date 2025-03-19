@@ -1,11 +1,12 @@
 import { SubHeader } from "./_components/organisms/subheader";
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import { HorizontalList } from "../_components/templates/horizontal-list";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
