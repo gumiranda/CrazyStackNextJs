@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { ImageIcon, Smile } from "lucide-react";
+import { ImageIcon, Loader2, Smile } from "lucide-react";
 import { useRef, useState } from "react";
 import { EmojiPicker } from "./emoji-picker";
 const MAX_TWEET_LENGTH = 280;
@@ -25,13 +25,15 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(tweet);
   };
   const remainingChars = MAX_TWEET_LENGTH - tweet.length;
   const isOverLimit = remainingChars < 0;
@@ -115,6 +117,34 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
             </AnimatePresence>
           </div>
         </div>
+      </div>
+      {error && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-red-500 text-sm"
+        >
+          {error}
+        </motion.p>
+      )}
+      <div className="flex justify-end">
+        <Button
+          type="submit"
+          variant="default"
+          disabled={tweet.trim().length === 0 || isOverLimit || isLoading}
+          className="px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transtion-colors duration-200"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              {tweetId ? "Respondendo..." : "Postando..."}
+            </>
+          ) : tweetId ? (
+            "Responder"
+          ) : (
+            "Postar"
+          )}
+        </Button>
       </div>
     </form>
   );
