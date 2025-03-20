@@ -5,19 +5,25 @@ export const verifyEmail = async ({
   email: string;
   token: string;
 }) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email?email=${email}&code=${token}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code: token }),
       },
-      body: JSON.stringify({ email, code: token }),
-    },
-  );
-  if (!response.ok) {
-    return;
+    );
+    if (!response.ok) {
+      return;
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-  const data = await response.json();
-  return data;
 };
