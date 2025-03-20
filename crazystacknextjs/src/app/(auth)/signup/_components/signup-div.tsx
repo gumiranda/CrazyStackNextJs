@@ -1,8 +1,8 @@
-import { LoginForm } from "@/slices/general/features/login";
+import { SignUpForm } from "@/slices/general/features/signup";
 import Link from "next/link";
 import { TermsAndConditions } from "../../_components/terms-and-conditions";
 
-export const SignInDiv = () => {
+export const SignUpDiv = () => {
   return (
     <div className="mt-8 lg:mt-0 p-8">
       <div
@@ -11,22 +11,22 @@ export const SignInDiv = () => {
       >
         <div className="flex flex-col space-y-2 text-center mb-4">
           <h1 className="text-2xl font-semibold tracking-tight font-inter">
-            Entrar na sua conta
+            Criar conta
           </h1>
           <p className="text-sm text-muted-foreground font-inter">
-            Entre com seu email e senha para acessar sua conta
+            Digite seu email e senha para criar sua conta
           </p>
         </div>
       </div>
-      <LoginForm />
+      <SignUpForm />
       <TermsAndConditions />
       <p className="mt-4 text-center text-sm text-muted-foreground">
-        Ainda não tem uma conta?{" "}
+        Já tem uma conta?{" "}
         <Link
-          href="/signup"
+          href="/login"
           className="font-semibold text-primary hover:underline"
         >
-          Cadastre-se aqui
+          Entre aqui
         </Link>
       </p>
     </div>
