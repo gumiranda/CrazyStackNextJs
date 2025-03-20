@@ -16,7 +16,7 @@ export const verifyEmail = async ({
     },
   );
   if (!response.ok) {
-    console.log("response");
+    console.log(response);
     return;
   }
   const data = await response.json();
