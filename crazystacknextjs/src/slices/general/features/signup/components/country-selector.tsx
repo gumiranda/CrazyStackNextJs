@@ -57,7 +57,7 @@ export const CountrySelector = ({
               alt={selectedCountry.name}
               className="mr-2"
             />
-            (+{selectedCountry.code})
+            (+{selectedCountry.phone})
           </span>
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
@@ -94,7 +94,7 @@ export const CountrySelector = ({
                   alt={country.name}
                   className="mr-2"
                 />
-                (+{country.code}) {country.name}
+                (+{country.phone}) {country.name}
               </span>
               {selectedCountry.code === country.code && (
                 <Check className="ml-auto h-4 w-4" />

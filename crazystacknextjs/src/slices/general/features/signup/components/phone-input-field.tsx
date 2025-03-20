@@ -7,10 +7,10 @@ interface PhoneInputFieldProps {
   type: string;
   placeholder: string;
   phoneError: string;
+  isPhoneValid: boolean;
   mask: string;
   setPhone: (value: string) => void;
   phone: string;
-  isPhoneValid: boolean;
 }
 
 export const PhoneInputField = ({
@@ -33,7 +33,9 @@ export const PhoneInputField = ({
         }`}
         placeholder={placeholder}
         mask={mask}
-        onChange={(e) => setPhone(e.target.value)}
+        onChange={(e) => {
+          setPhone(e.target.value);
+        }}
         replacement={{ _: /\d/ }}
         component={Input}
         value={phone}
