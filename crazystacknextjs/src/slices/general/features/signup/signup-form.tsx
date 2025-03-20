@@ -1,24 +1,24 @@
 "use client";
-
-import { useTranslation } from "react-i18next";
-import { useLogin } from "./login.hook";
 import { cn } from "@/lib/utils";
-import { EmailPasswordForm } from "./components/email-password-form";
+import { useSignUp } from "./signup.hook";
+import { useTranslation } from "react-i18next";
 import { SocialButton } from "@/shared/ui/atoms/social-button/social-button";
 import { Icons } from "@/components/ui/icons";
+import { EmailPasswordForm } from "./components/email-password-form";
 
-interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function LoginForm({ className, ...props }: LoginFormProps) {
-  const { formState, handleSubmit, register, handleLogin } = useLogin();
-
+export function SignUpForm({ className, ...props }: SignUpFormProps) {
+  const { formState, handleSubmit, register, handleSignUp, formProps } =
+    useSignUp();
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <EmailPasswordForm
         formState={formState}
         handleSubmit={handleSubmit}
         register={register}
-        handleLogin={handleLogin}
+        handleSignUp={handleSignUp}
+        formProps={formProps}
       />
       <GoogleLoginSection formState={formState} />
     </div>
