@@ -27,7 +27,7 @@ export default async function Page({
   const email = Array.isArray(emailParam) ? emailParam?.[0] : emailParam;
   const token = Array.isArray(tokenParam) ? tokenParam?.[0] : tokenParam;
   const result = await handleEmailVerification({ email, token });
-  if (result) {
+  if (!result?.message) {
     return <FallbackEmailVerified email={email} />;
   }
   return (

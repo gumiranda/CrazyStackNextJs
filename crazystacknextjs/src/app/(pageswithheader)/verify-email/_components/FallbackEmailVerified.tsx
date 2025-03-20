@@ -1,5 +1,6 @@
 "use client";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,15 +10,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CheckCircle, Loader2, Mail } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-
+import { api } from "@/shared/api";
 export function FallbackEmailVerified({ email = "" }) {
   const [isResending, setIsResending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [resendSuccess, setResendSuccess] = useState(false);
-  async function resendVerificationEmail() {}
+
+  async function resendVerificationEmail() {
+    setIsResending(true);
+    setError(null);
+    setResendSuccess(false);
+
+    try {
+      if (!api) {
+        throw new Error("API instance is not available");
+      }
+      const response = await api.post("/auth/resend-email", { email });
+      setResendSuccess(!!response?.data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred",
+      );
+    } finally {
+      setIsResending(false);
+    }
+  }
+
   return (
     <div className="flex justify-center p-4">
       <Card className="w-full max-w-md">
