@@ -40,6 +40,37 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    try {
+      const cookies = parseCookies();
+      let photo;
+      if (formDataImage) {
+        photo = await uploadPhoto({ formDataImage, cookies });
+      }
+      const response = await addTweet({
+        tweet: {
+          userSlug: user?.name,
+          body: tweet,
+          image: photo?._id,
+          tweetId,
+        },
+        cookies,
+      });
+      if (response?._id) {
+        toast.success(
+          tweetId
+            ? "Resposta enviada com sucesso!"
+            : "Post enviado com sucesso!",
+        );
+        setTweet("");
+        setImage(null);
+      }
+    } catch (err) {
+      setError("Failed to submit tweet. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
