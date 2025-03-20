@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { ImageIcon, Loader2, Smile } from "lucide-react";
+import { ImageIcon, Loader2, Smile, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { EmojiPicker } from "./emoji-picker";
 const MAX_TWEET_LENGTH = 280;
@@ -30,6 +30,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
   const [image, setImage] = useState<string | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [error, setError] = useState("");
+  const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,8 +39,25 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
   const remainingChars = MAX_TWEET_LENGTH - tweet.length;
   const isOverLimit = remainingChars < 0;
 
-  const removeImage = () => {};
-  const handleImageUpload = () => {};
+  const removeImage = () => {
+    setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const formData = new FormData();
+    if (file) {
+      formData.append("file", file);
+      setFormDataImage(formData);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const handleEmojiSelect = () => {};
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -150,5 +168,37 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
   );
 }
 export const ImageTweet = ({ image, removeImage }: any) => {
-  return <></>;
+  return (
+    <>
+      {image && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="relative mt-2"
+          >
+            <div className="w-full max-w-[400px] max-h-[200px] overflow-hidden rounded-lg">
+              <img
+                src={image || "/placeholder.svg"}
+                alt="Uploaded preview"
+                className="w-full h-full object-contain"
+                style={{ maxHeight: "400px", maxWidth: "400px" }}
+              />
+            </div>
+            <Button
+              type="button"
+              size="icon"
+              variant="destructive"
+              className="absolute top-2 right-2"
+              onClick={removeImage}
+              aria-label="Remove image"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </>
+  );
 };
