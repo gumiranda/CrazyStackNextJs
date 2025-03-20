@@ -1,29 +1,21 @@
 import { useState } from "react";
-import { PhoneInputField } from "./phone-input-field";
+import { Label } from "@/components/ui/label";
 import { CountrySelector, type Country } from "./country-selector";
+import { PhoneInputField } from "./phone-input-field";
 import parsePhoneNumberFromString, {
   AsYouType,
   isValidPhoneNumber,
   type CountryCode,
 } from "libphonenumber-js";
-import { Label } from "@/components/ui/label";
-export const PhoneInput = ({
-  label,
-  id,
-  type,
-  formProps,
-}: {
-  label: string;
-  id: string;
-  type: string;
-  formProps: { setValue: (key: string, value: string) => void };
-}) => {
+
+export const PhoneInput = ({ label, id, type, formProps }: any) => {
   const { setValue } = formProps;
   const [phone, setPhone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [searchTerm, setSearchTerm] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+
   const validateAndFormatPhone = (value: string) => {
     try {
       const digitsOnly = value.replace(/\D/g, "");
@@ -34,13 +26,16 @@ export const PhoneInput = ({
         fullNumber,
         selectedCountry.code as CountryCode,
       );
+
       const phoneNumber = parsePhoneNumberFromString(
         fullNumber,
         selectedCountry.code as CountryCode,
       );
+
       setIsPhoneValid(isValid);
       setPhoneError(isValid ? "" : "Invalid phone number");
       setValue("phone", formattedNumber);
+      setPhone(value);
       return { formatted: formattedNumber, isValid, phoneNumber };
     } catch (error) {
       setIsPhoneValid(false);
@@ -50,9 +45,10 @@ export const PhoneInput = ({
       return { formatted: value, isValid: false, phoneNumber: null };
     }
   };
+
   return (
     <div className="space-y-2">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor="phone">{label}</Label>
       <div className="flex gap-2">
         <CountrySelector
           countries={countries}

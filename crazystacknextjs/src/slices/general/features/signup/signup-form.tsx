@@ -1,14 +1,14 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { useSignUp } from "./signup.hook";
+
 import { useTranslation } from "react-i18next";
+import { useSignUp } from "./signup.hook";
+import { cn } from "@/lib/utils";
+import { EmailPasswordForm } from "./components/email-password-form";
 import { SocialButton } from "@/shared/ui/atoms/social-button/social-button";
 import { Icons } from "@/components/ui/icons";
-import { EmailPasswordForm } from "./components/email-password-form";
-
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function SignUpForm({ className, ...props }: SignUpFormProps) {
+export function SignUpForm({ className, ...props }: any) {
   const { formState, handleSubmit, register, handleSignUp, formProps } =
     useSignUp();
   return (
@@ -20,11 +20,12 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         handleSignUp={handleSignUp}
         formProps={formProps}
       />
-      <GoogleLoginSection formState={formState} />
+      <GoogleSignUpSection formState={formState} />
     </div>
   );
 }
-export const GoogleLoginSection = ({ formState }: { formState: any }) => {
+
+const GoogleSignUpSection = ({ formState }: { formState: any }) => {
   const { t } = useTranslation(["PAGES"]);
 
   return (

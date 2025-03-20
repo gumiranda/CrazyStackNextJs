@@ -16,7 +16,7 @@ export interface SignUpFormData {
   coord: any;
 }
 
-export type SubmitSignupHandler = SubmitHandler<SignUpFormData>;
+export type SubmitSignUpHandler = SubmitHandler<SignUpFormData>;
 
 export const signupSchema = yup.object({
   email: yup.string().email("Email inválido").required("Email é obrigatório"),

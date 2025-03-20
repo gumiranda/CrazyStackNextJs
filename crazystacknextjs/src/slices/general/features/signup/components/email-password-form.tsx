@@ -24,12 +24,12 @@ export const EmailPasswordForm = ({
 }: EmailPasswordFormProps) => {
   const { t } = useTranslation(["PAGES"]);
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit(handleSignUp)}>
+    <form id="signup" onSubmit={handleSubmit(handleSignUp)}>
       <div className="grid gap-4">
         <FormField
           label={t("PAGES:AUTH_PAGE.name", { defaultValue: "Nome" })}
-          id={"name"}
-          type={"text"}
+          id="name"
+          type="text"
           placeholder={t("PAGES:AUTH_PAGE.placeholdername", {
             defaultValue: "Seu nome completo",
           })}
@@ -51,7 +51,7 @@ export const EmailPasswordForm = ({
         <PhoneInput
           label={t("PAGES:AUTH_PAGE.phone", { defaultValue: "Telefone" })}
           id="phone"
-          type="tel"
+          //type="tel"
           formProps={formProps}
         />
         <FormField
@@ -64,7 +64,7 @@ export const EmailPasswordForm = ({
           disabled={formState.isSubmitting}
           register={register}
           error={formState.errors.password?.message?.toString()}
-        />{" "}
+        />
         <FormField
           label={t("PAGES:AUTH_PAGE.passwordConfirmation", {
             defaultValue: "Confirmar Senha",
@@ -78,11 +78,17 @@ export const EmailPasswordForm = ({
           register={register}
           error={formState.errors.passwordConfirmation?.message?.toString()}
         />
-        <Button type="submit" disabled={formState.isSubmitting}>
+
+        <Button
+          form="signup"
+          type="submit"
+          disabled={formState.isSubmitting}
+          className="mt-2"
+        >
           {formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {t("PAGES:AUTH_PAGE.signup", { defaultValue: "Criar conta" })}
+          {t("PAGES:AUTH_PAGE.signUp", { defaultValue: "Criar conta" })}
         </Button>
       </div>
     </form>
