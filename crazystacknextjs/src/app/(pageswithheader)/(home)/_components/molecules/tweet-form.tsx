@@ -1,12 +1,18 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/shared/libs/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Loader2, ImageIcon, Smile, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ImageIcon, Loader2, Smile, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { parseCookies } from "nookies";
+import { uploadPhoto } from "@/slices/belezix/entidades/photo/photo.api";
+import { addTweet } from "@/slices/belezix/entidades/tweet/tweet.api";
+import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { EmojiPicker } from "./emoji-picker";
+import { toast } from "sonner";
+
 const MAX_TWEET_LENGTH = 280;
 
 export function TweetFormContainer({ tweetId }: { tweetId?: string }) {
@@ -23,31 +29,23 @@ export function TweetFormContainer({ tweetId }: { tweetId?: string }) {
 }
 export function TweetForm({ tweetId }: { tweetId?: string }) {
   const { user } = useAuth();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const emojiPickerRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [tweet, setTweet] = useState("");
-  const [image, setImage] = useState<string | null>(null);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [image, setImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(tweet);
   };
-  const remainingChars = MAX_TWEET_LENGTH - tweet.length;
-  const isOverLimit = remainingChars < 0;
 
-  const removeImage = () => {
-    setImage(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     const formData = new FormData();
+
     if (file) {
       formData.append("file", file);
       setFormDataImage(formData);
@@ -58,12 +56,27 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
       reader.readAsDataURL(file);
     }
   };
-  const handleEmojiSelect = () => {};
+
+  const removeImage = () => {
+    setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleEmojiSelect = (emoji: string) => {
+    setTweet(tweet + emoji);
+    setShowEmojiPicker(false);
+  };
+
+  const remainingChars = MAX_TWEET_LENGTH - tweet.length;
+  const isOverLimit = remainingChars < 0;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Avatar>
-          <AvatarImage src={"/barba.svg"} />
+      <div className="w-full flex flex-col md:flex-row items-start">
+        <Avatar className="w-12 h-12 md:mr-4 mb-4 md:mb-0">
+          <AvatarImage src="/placeholder-avatar.jpg" alt="User" />
           <AvatarFallback>
             {user?.name?.charAt?.(0)?.toUpperCase?.() ?? "U"}
           </AvatarFallback>
@@ -104,9 +117,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
                 type="button"
                 size="icon"
                 variant="outline"
-                onClick={() => {
-                  setShowEmojiPicker(!showEmojiPicker);
-                }}
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 aria-label="Add emoji"
               >
                 <Smile className="w-4 h-4" />
@@ -150,7 +161,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
           type="submit"
           variant="default"
           disabled={tweet.trim().length === 0 || isOverLimit || isLoading}
-          className="px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transtion-colors duration-200"
+          className="px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-200"
         >
           {isLoading ? (
             <>
