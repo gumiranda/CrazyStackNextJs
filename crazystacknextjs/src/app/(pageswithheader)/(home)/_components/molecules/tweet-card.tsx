@@ -67,12 +67,16 @@ export const TweetCard = ({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 text-lg leading-relaxed line-clamp-6">
+        <p
+          className="mb-4 text-lg leading-relaxed line-clamp-6"
+          style={{ wordBreak: "break-word" }}
+        >
           {tweet?.body}
         </p>
         {tweet?.image && (
           <img
             src={tweet?.image}
+            alt="Tweet image"
             className="w-full rounded-lg mb-4 object-cover h-64"
           />
         )}
@@ -81,7 +85,7 @@ export const TweetCard = ({
         <div className="flex justify-between w-full">
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors"
             onClick={() => {
               if (!user) {
@@ -96,6 +100,7 @@ export const TweetCard = ({
             }}
           >
             <MessageCircle className="w-5 h-5" />
+            {tweet?.replies ?? 0}
           </Button>
           <Button
             variant="ghost"
@@ -108,8 +113,8 @@ export const TweetCard = ({
           </Button>
           <Button
             variant="ghost"
-            size="icon"
-            className={`flex items-center justify-center transition-colors ${
+            size="sm"
+            className={`flex items-center space-x-2 transition-colors ${
               isLiked
                 ? "text-red-500 hover:text-red-600"
                 : "text-gray-500 hover:text-red-500"
