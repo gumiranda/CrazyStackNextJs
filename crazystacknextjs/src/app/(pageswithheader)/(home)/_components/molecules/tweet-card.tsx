@@ -8,7 +8,9 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
+import { toggleLike } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { Heart, MessageCircle, Repeat2 } from "lucide-react";
+import { parseCookies } from "nookies";
 import { useCallback, useEffect, useState } from "react";
 
 export const TweetCard = ({
@@ -43,7 +45,25 @@ export const TweetCard = ({
       });
       return;
     }
-  }, [user, tweet]);
+    setIsLikeLoading(true);
+    try {
+      await toggleLike({
+        tweetlike: { tweetId: tweet?._id, userSlug: user?.slug },
+        cookies: parseCookies(),
+      });
+      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error("Error liking tweet:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update like status. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLikeLoading(false);
+    }
+  }, [user, tweet, isLiked]);
   return (
     <Card className="w-full" ref={ref}>
       <CardHeader>
