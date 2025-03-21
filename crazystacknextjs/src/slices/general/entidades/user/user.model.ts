@@ -12,6 +12,7 @@ export type UserProps = {
   serviceIds?: string[];
   daysSinceRegister?: number;
   phone?: string;
+  slug?: string;
 };
 
 class User {
@@ -24,6 +25,9 @@ class User {
   }
   get _id(): string {
     return this.props._id;
+  }
+  get slug(): string {
+    return this.props.slug ?? "";
   }
   get name(): string {
     return this.props.name;
@@ -72,7 +76,7 @@ class User {
       daysSinceRegister: this.props.createdAt
         ? Math.floor(
             (new Date().getTime() - new Date(this.props.createdAt).getTime()) /
-              (1000 * 60 * 60 * 24)
+              (1000 * 60 * 60 * 24),
           )
         : 0,
     };
@@ -81,7 +85,8 @@ class User {
 export const calculateDaysSinceRegister = (createdAt: string) => {
   if (!createdAt) return 9999;
   return Math.floor(
-    (new Date().getTime() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24)
+    (new Date().getTime() - new Date(createdAt).getTime()) /
+      (1000 * 60 * 60 * 24),
   );
 };
 export const userModel = (props: UserProps) => User.build(props);

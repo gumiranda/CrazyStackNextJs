@@ -1,5 +1,6 @@
 import { LoginForm } from "@/slices/general/features/login";
 import Link from "next/link";
+import { TermsAndConditions } from "../../_components/terms-and-conditions";
 
 export const SignInDiv = () => {
   return (
@@ -18,20 +19,14 @@ export const SignInDiv = () => {
         </div>
       </div>
       <LoginForm />
-      <p className="mt-4 px-8 text-center text-sm text-muted-foreground">
-        Clicando em continuar, você concorda com nossos{" "}
+      <TermsAndConditions />
+      <p className="mt-4 text-center text-sm text-muted-foreground">
+        Ainda não tem uma conta?{" "}
         <Link
-          href="/terms"
-          className="underline underline-offset-4 hover:text-primary"
+          href="/signup"
+          className="font-semibold text-primary hover:underline"
         >
-          Termos de serviço
-        </Link>{" "}
-        e{" "}
-        <Link
-          href="/terms"
-          className="underline underline-offset-4 hover:text-primary"
-        >
-          Política de privacidade
+          Cadastre-se aqui
         </Link>
       </p>
       <p className="mt-4 text-center text-sm text-muted-foreground">

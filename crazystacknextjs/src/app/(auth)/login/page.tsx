@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
-import { SideDiv } from "./_components/side-div";
 import { SignInDiv } from "./_components/signin-div";
+import { SideDiv } from "../_components/side-div";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Entrar`,

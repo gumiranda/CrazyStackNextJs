@@ -38,6 +38,7 @@ export type OwnerProps = {
   address?: string;
   services?: any;
   phones?: any;
+  place?: any;
 };
 
 class Owner {
@@ -161,6 +162,9 @@ class Owner {
   }
   get phones(): any | undefined {
     return this.props.phones;
+  }
+  get place(): any | undefined {
+    return this.props.place;
   }
 
   format(): OwnerProps {

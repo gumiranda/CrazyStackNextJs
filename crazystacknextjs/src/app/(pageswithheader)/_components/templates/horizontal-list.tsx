@@ -22,7 +22,7 @@ export const HorizontalList = ({
   return (
     <>
       {array.length > 0 && (
-        <div className="mx-5 lg:max-w-lg">
+        <div className="mx-5 lg:max-w-2xl">
           <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
             {title}
           </h2>

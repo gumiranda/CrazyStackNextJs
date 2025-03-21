@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { whitelabel } from "@/application/whitelabel";
-import { getCookies, parseCookies } from "@/shared/libs/utils";
+import { parseCookies } from "@/shared/libs/utils";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import AppointmentsList from "./AppointmentsList";
+import { getCookies } from "@/shared/libs/utils/cookies";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Meus Agendamentos`,
@@ -53,13 +54,15 @@ export default async function Page() {
     cookies,
   } = appointments;
   return (
-    <AppointmentsList
-      initialConfirmedAppointments={confirmedAppointments}
-      initialConcludedAppointments={concludedAppointments}
-      confirmedTotalCount={confirmedTotalCount}
-      concludedTotalCount={concludedTotalCount}
-      cookies={cookies}
-    />
+    <main className="max-w-4xl mx-auto">
+      <AppointmentsList
+        initialConfirmedAppointments={confirmedAppointments}
+        initialConcludedAppointments={concludedAppointments}
+        confirmedTotalCount={confirmedTotalCount}
+        concludedTotalCount={concludedTotalCount}
+        cookies={cookies}
+      />
+    </main>
   );
 }
 async function getParsedCookies() {
