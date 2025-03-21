@@ -12,6 +12,7 @@ import { toggleLike } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { Heart, MessageCircle, Repeat2 } from "lucide-react";
 import { parseCookies } from "nookies";
 import { useCallback, useEffect, useState } from "react";
+import { TweetForm } from "./tweet-form";
 
 export const TweetCard = ({
   tweet,
@@ -66,8 +67,8 @@ export const TweetCard = ({
   }, [user, tweet, isLiked]);
   return (
     <Card className="w-full" ref={ref}>
-      <CardHeader>
-        <Avatar>
+      <CardHeader className="flex flex-row items-center space-x-4 pb-2">
+        <Avatar className="w-12 h-12">
           <AvatarImage
             src={tweet?.createdBy?.photo}
             alt={tweet?.createdBy?.name}
@@ -151,6 +152,11 @@ export const TweetCard = ({
           </Button>
         </div>
       </CardFooter>
+      {canReply && (
+        <div className="m-4 rounded-lg shadow-md max-w-2xl">
+          <TweetForm tweetId={tweet?._id} />
+        </div>
+      )}
     </Card>
   );
 };
