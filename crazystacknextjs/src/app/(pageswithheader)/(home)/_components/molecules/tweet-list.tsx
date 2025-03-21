@@ -38,8 +38,12 @@ export function TweetList({
     },
     [loading, tweets.length, countTweets],
   );
-  const handleChangeCanReply = (tweetId: string) => {
-    setCanReply(tweets.find((tweet) => tweet._id === tweetId) || null);
+  const handleChangeCanReply = ({ tweet }: { tweet: TweetProps }) => {
+    if (canReply?._id === tweet?._id) {
+      setCanReply(null);
+      return;
+    }
+    setCanReply(tweet);
   };
   return (
     <AnimatePresence>
