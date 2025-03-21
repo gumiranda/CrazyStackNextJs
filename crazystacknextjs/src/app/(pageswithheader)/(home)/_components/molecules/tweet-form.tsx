@@ -119,7 +119,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="w-full flex flex-col md:flex-row items-start">
+      <div className="p-3 w-full flex flex-col md:flex-row items-start">
         <Avatar className="w-12 h-12 md:mr-4 mb-4 md:mb-0">
           <AvatarImage src="/placeholder-avatar.jpg" alt="User" />
           <AvatarFallback>
@@ -206,7 +206,7 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
           type="submit"
           variant="default"
           disabled={tweet.trim().length === 0 || isOverLimit || isLoading}
-          className="px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-200"
+          className="m-2 px-6 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-200"
         >
           {isLoading ? (
             <>
