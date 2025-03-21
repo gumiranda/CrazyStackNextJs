@@ -12,6 +12,7 @@ import { addTweet } from "@/slices/belezix/entidades/tweet/tweet.api";
 import { useAuth } from "@/shared/libs/contexts/AuthContext";
 import { EmojiPicker } from "./emoji-picker";
 import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 const MAX_TWEET_LENGTH = 280;
 
@@ -29,6 +30,8 @@ export function TweetFormContainer({ tweetId }: { tweetId?: string }) {
 }
 export function TweetForm({ tweetId }: { tweetId?: string }) {
   const { user } = useAuth();
+  const { toast: toastError } = useToast();
+
   const [tweet, setTweet] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -54,6 +57,14 @@ export function TweetForm({ tweetId }: { tweetId?: string }) {
   }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      toastError({
+        title: "Authentication required",
+        description: "Please log in to create post.",
+        variant: "destructive",
+      });
+      return;
+    }
     setIsLoading(true);
     setError("");
     try {
