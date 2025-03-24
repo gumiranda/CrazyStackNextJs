@@ -20,15 +20,7 @@ export const SignInDiv = () => {
       </div>
       <LoginForm />
       <TermsAndConditions />
-      <p className="mt-4 text-center text-sm text-muted-foreground">
-        Ainda não tem uma conta?{" "}
-        <Link
-          href="/signup"
-          className="font-semibold text-primary hover:underline"
-        >
-          Cadastre-se aqui
-        </Link>
-      </p>
+
       <p className="mt-4 text-center text-sm text-muted-foreground">
         Ainda não tem uma conta?{" "}
         <Link
