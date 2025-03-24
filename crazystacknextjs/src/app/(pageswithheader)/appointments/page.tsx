@@ -4,7 +4,7 @@ import { parseCookies } from "@/shared/libs/utils";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import AppointmentsList from "./AppointmentsList";
-import { getCookies } from "@/shared/libs/utils/cookies";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Meus Agendamentos`,
@@ -66,14 +66,13 @@ export default async function Page() {
   );
 }
 async function getParsedCookies() {
-  const cookies = await getCookies();
-  if (!cookies) {
+  const cookieStore = (await cookies()).getAll();
+
+  if (!cookieStore) {
     return null;
   }
-  if (!cookies) {
-    return null;
-  }
-  const parsedCookies = parseCookies(cookies);
+
+  const parsedCookies = parseCookies(cookieStore);
   if (!parsedCookies?.["belezixclient.token"]) {
     return null;
   }
