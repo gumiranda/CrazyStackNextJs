@@ -15,14 +15,7 @@ export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Agendamentos Online`,
   description: `Página de inicial do ${whitelabel.systemName}. Aqui você pode agendar com os melhores estabelecimentos da cidade.`,
 };
-async function getCookieData() {
-  const cookieData = (await cookies()).getAll();
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(cookieData);
-    }, 1000),
-  );
-}
+
 async function getParsedCookies() {
   const cookieStore = (await cookies()).getAll();
 
@@ -64,7 +57,7 @@ async function handleTweets(cookies: any) {
   }
 }
 export default async function Page() {
-  const cookies = await getCookieData();
+  const cookies = await getParsedCookies();
   const popularOwners = await getOwnersPublic(1, cookies, {
     sortBy: "appointmentsTotal",
     typeSort: "desc",
