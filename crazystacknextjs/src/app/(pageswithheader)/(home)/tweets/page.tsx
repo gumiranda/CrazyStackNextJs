@@ -38,17 +38,9 @@ async function handleTweets(cookies: any) {
     return { tweets: [], totalCount: 0 };
   }
 }
-async function getCookieData() {
-  const cookieData = (await cookies()).getAll();
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(cookieData);
-    }, 1000),
-  );
-}
 
 export default async function TweetsPage() {
-  const cookies = await getCookieData();
+  const cookies = await getParsedCookies();
   const { tweets, totalCount: countTweets } = await handleTweets(cookies);
 
   return (
