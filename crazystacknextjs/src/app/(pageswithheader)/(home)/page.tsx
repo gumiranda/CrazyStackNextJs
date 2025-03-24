@@ -6,7 +6,6 @@ import { getOwnersPublic } from "@/slices/belezix/entidades/owner/owner.api";
 import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import { HorizontalList } from "../_components/templates/horizontal-list";
-import { getCookies } from "@/shared/libs/utils/cookies";
 import { TweetFormContainer } from "./_components/molecules/tweet-form";
 import { TweetList } from "./_components/molecules/tweet-list";
 import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
@@ -25,16 +24,19 @@ async function getCookieData() {
   );
 }
 async function getParsedCookies() {
-  const cookies = await getCookies();
-  if (!cookies) {
+  const cookieStore = (await cookies()).getAll();
+
+  if (!cookieStore) {
     return null;
   }
-  const parsedCookies = parseCookies(cookies);
+
+  const parsedCookies = parseCookies(cookieStore);
   if (!parsedCookies?.["belezixclient.token"]) {
     return null;
   }
   return parsedCookies;
 }
+
 async function handleRequests(cookies: any) {
   try {
     const { requests, totalCount = 0 } = !cookies
