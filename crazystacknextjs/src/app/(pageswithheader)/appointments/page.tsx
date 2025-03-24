@@ -10,17 +10,10 @@ export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Meus Agendamentos`,
   description: `Página de listagem dos meus agendamentos do ${whitelabel.systemName}. Aqui você pode listar e cancelar seus agendamentos.`,
 };
-async function getCookieData() {
-  const cookieData = (await cookies()).getAll();
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(cookieData);
-    }, 1000),
-  );
-}
+
 async function getAppointments() {
   try {
-    const cookies = await getCookieData();
+    const cookies = await getParsedCookies();
     if (!cookies) {
       return null;
     }
