@@ -14,7 +14,7 @@ i18next
     interpolation: {
       escapeValue: false, // Evita escapar caracteres HTML
     },
-    compatibilityJSON: "v3",
+    compatibilityJSON: "v4",
     react: {
       //wait: true,
       useSuspense: false,
