@@ -5,6 +5,7 @@ import { getTweets } from "@/slices/belezix/entidades/tweet/tweet.api";
 import type { Metadata } from "next";
 import { TweetFormContainer } from "../_components/molecules/tweet-form";
 import { TweetList } from "../_components/molecules/tweet-list";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Posts`,
@@ -34,8 +35,17 @@ async function handleTweets(cookies: any) {
     return { tweets: [], totalCount: 0 };
   }
 }
+async function getCookieData() {
+  const cookieData = (await cookies()).getAll();
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(cookieData);
+    }, 1000),
+  );
+}
+
 export default async function TweetsPage() {
-  const cookies = await getParsedCookies();
+  const cookies = await getCookieData();
   const { tweets, totalCount: countTweets } = await handleTweets(cookies);
 
   return (

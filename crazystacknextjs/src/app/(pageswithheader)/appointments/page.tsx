@@ -5,14 +5,23 @@ import { getRequests } from "@/slices/belezix/entidades/request/request.api";
 import { startOfDay } from "date-fns";
 import AppointmentsList from "./AppointmentsList";
 import { getCookies } from "@/shared/libs/utils/cookies";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: `${whitelabel.systemName} | Meus Agendamentos`,
   description: `Página de listagem dos meus agendamentos do ${whitelabel.systemName}. Aqui você pode listar e cancelar seus agendamentos.`,
 };
+async function getCookieData() {
+  const cookieData = (await cookies()).getAll();
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(cookieData);
+    }, 1000),
+  );
+}
 async function getAppointments() {
   try {
-    const cookies = await getParsedCookies();
+    const cookies = await getCookieData();
     if (!cookies) {
       return null;
     }
