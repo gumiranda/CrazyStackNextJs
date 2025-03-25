@@ -1,4 +1,4 @@
-import { setupAPIClient } from "@/shared/api";
+import { getAxios, setupAPIClient } from "@/shared/api";
 import { RequestProps, requestModel } from "./request.model";
 export type GetRequestsResponse = {
   requests: RequestProps[];
@@ -12,13 +12,12 @@ export const getRequests = async (
   ctx: any,
   params: any = {},
 ): Promise<GetRequestsResponse> => {
-  const apiClient = setupAPIClient(ctx);
-  if (!apiClient) {
-    throw new Error("API client is null");
-  }
-  const { data } = await apiClient.get("/request/loadByPage", {
-    params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
-  });
+  const { data } = await getAxios(ctx?.["belezixclient.token"])(
+    "/request/loadByPage",
+    {
+      params: { page, sortBy: "createdAt", typeSort: "desc", ...params },
+    },
+  );
   const { requests, total } = data || {};
   const totalCount = Number(total ?? 0);
   const lastPage = Number.isInteger(totalCount / registerByPage)

@@ -56,23 +56,33 @@ async function handleTweets(cookies: any) {
     return { tweets: [], totalCount: 0 };
   }
 }
+const handleOwners = async (cookies: any) => {
+  try {
+    const popularOwners = await getOwnersPublic(1, cookies, {
+      sortBy: "appointmentsTotal",
+      typeSort: "desc",
+    });
+    const lastOwners = await getOwnersPublic(1, cookies, {
+      sortBy: "createdAt",
+      typeSort: "desc",
+    });
+
+    const owners = Array.isArray(popularOwners?.owners)
+      ? popularOwners?.owners
+      : [];
+    const newOwners = Array.isArray(lastOwners?.owners)
+      ? lastOwners?.owners
+      : [];
+    return { owners, newOwners };
+  } catch (error: any) {
+    return { owners: [], newOwners: [] };
+  }
+};
 export default async function Page() {
   const cookies = await getParsedCookies();
-  const popularOwners = await getOwnersPublic(1, cookies, {
-    sortBy: "appointmentsTotal",
-    typeSort: "desc",
-  });
-  const lastOwners = await getOwnersPublic(1, cookies, {
-    sortBy: "createdAt",
-    typeSort: "desc",
-  });
-  const owners = Array.isArray(popularOwners?.owners)
-    ? popularOwners?.owners
-    : [];
-  const newOwners = Array.isArray(lastOwners?.owners) ? lastOwners?.owners : [];
   const { requests, totalCount } = await handleRequests(cookies);
   const { tweets, totalCount: countTweets } = await handleTweets(cookies);
-
+  const { owners, newOwners } = await handleOwners(cookies);
   return (
     <main className="min-h-screen flex flex-col xl:flex-row justify-center mx-auto">
       <section className="flex flex-col w-full px-3 border-r-2 border-gray-900">
