@@ -26,9 +26,9 @@ Guidelines for building user interfaces and handling frontend logic.
 | Rule File                          | Description                                                 |
 | :--------------------------------- | :---------------------------------------------------------- |
 | @page-structure.mdc                | Page structure guidelines                                   |
-| @ui-components.mdc                 | UI component and styling guidelines (Shadcn, Radix, Tailwind) |
+| @ui-components.mdc                 | UI component and styling guidelines(Shadcn, Radix,Tailwind) |
 | @form-handling.mdc                 | Form handling using React Hook Form and Zod                 |
-| @data-fetching.mdc                 | Fetching data from the API using @tanstack/react-query                        |
+| @data-fetching.mdc                 | Fetching data from the API using @tanstack/react-query      |
  
  
 
