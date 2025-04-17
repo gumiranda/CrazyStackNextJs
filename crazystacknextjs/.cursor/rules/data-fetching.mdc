@@ -1,0 +1,77 @@
+---
+description: Fetching data from the API using @tanstack/react-query
+globs: 
+alwaysApply: false
+---
+# Data Fetching
+
+There are two ways we fetch data in the app:
+1. @tanstack/react-query (default)
+2. Server Components
+
+Default to @tanstack/react-query as it makes it easier to refetch data we need.
+
+Here's how we use @tanstack/react-query:
+
+- For API GET requests to server, use the `@tanstack/react-query` package
+- If we're in a server file, you can fetch the data inline
+- For mutating data, use Next.js server actions
+
+## React Query Example
+```typescript
+import { useQuery } from '@tanstack/react-query';
+
+interface PlanHistoryResponse {
+  // Defina a estrutura do seu tipo de resposta aqui
+  // Exemplo:
+  // id: number;
+  // name: string;
+  // etc.
+}
+
+const fetchPlanHistory = async (page: number): Promise<PlanHistoryResponse> => {
+  const response = await fetch(`/api/user/planned/history?page=${page}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+const MyComponent = () => {
+  const page = 1;
+  const { data, isLoading, error } = useQuery<PlanHistoryResponse, Error>(
+    ['planHistory', page],
+    () => fetchPlanHistory(page)
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      {/* Renderize seus dados aqui */} 
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+## Error Handling
+Use `isActionError` with `toastError` and `toastSuccess`. Success toast is optional:
+
+```typescript
+import { toastError, toastSuccess } from "@/components/Toast";
+
+const onSubmit: SubmitHandler<TestRulesInputs> = useCallback(async (data) => {
+  const result = await testAiCustomContentAction({ content: data.message });
+  if (isActionError(result)) {
+    toastError({
+      title: "Error testing email",
+      description: result.error,
+    });
+  } else {
+    toastSuccess({ description: "Saved!" });
+  }
+}, []);
+``` 
