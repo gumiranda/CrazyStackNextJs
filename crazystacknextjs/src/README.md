@@ -92,4 +92,57 @@ src/
 - Use camelCase para hooks, funções e variáveis
 - Use kebab-case para nomes de arquivos de páginas no Next.js
 - Adicione sufixo `.type.ts` para arquivos de tipos
-- Adicione sufixo `.test.ts(x)` para arquivos de teste 
+- Adicione sufixo `.test.ts(x)` para arquivos de teste
+
+## Atomic Design
+
+Nossa estrutura de componentes segue os princípios do Atomic Design, uma metodologia que divide os componentes em cinco níveis distintos:
+
+### Átomos (atoms)
+- Componentes mais básicos e indivisíveis
+- Exemplos: botões, inputs, labels, ícones
+- Localização: `components/ui/`
+
+### Moléculas (molecules)
+- Combinação de átomos para formar componentes simples mas funcionais
+- Exemplos: campos de busca, cards simples, formulários básicos
+- Localização: `components/molecules/`
+
+### Organismos (organisms)
+- Componentes mais complexos formados por moléculas e/ou átomos
+- Exemplos: headers, footers, listas de cards
+- Localização: `components/organisms/`
+
+### Templates
+- Estruturas de página sem conteúdo real
+- Define o layout e a organização dos organismos
+- Localização: `components/templates/`
+
+### Páginas (pages)
+- Instâncias específicas de templates com conteúdo real
+- Implementadas dentro do diretório `app/`
+
+### Exemplo de Estrutura
+```
+components/
+├── ui/              # Átomos
+│   ├── button.tsx
+│   ├── input.tsx
+│   └── label.tsx
+├── molecules/       # Moléculas
+│   ├── search-bar.tsx
+│   └── form-field.tsx
+├── organisms/       # Organismos
+│   ├── header.tsx
+│   └── footer.tsx
+└── templates/       # Templates
+    ├── dashboard.tsx
+    └── auth.tsx
+```
+
+Esta estrutura nos permite:
+- Manter uma hierarquia clara de componentes
+- Facilitar a reutilização
+- Melhorar a manutenibilidade
+- Criar uma documentação visual consistente
+- Escalar o projeto de forma organizada 

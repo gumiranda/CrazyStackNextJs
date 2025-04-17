@@ -10,3 +10,39 @@ alwaysApply: false
 - Pages are Server components so you can load data into them directly
 - If we're in a deeply nested component we will use `@tanstack/react-query` to fetch via API
 - If you need to use `onClick` in a component, that component is a client component and file must start with `use client` 
+
+## Atomic Design na Página
+
+Nossa estrutura de componentes segue os princípios do Atomic Design, uma metodologia que divide os componentes em cinco níveis distintos:
+
+### Moléculas (molecules)
+- Combinação de átomos para formar componentes simples mas funcionais
+- Exemplos: campos de busca, cards simples, formulários básicos
+- Localização: `app/PAGE_NAME/components/molecules/`
+
+### Organismos (organisms)
+- Componentes mais complexos formados por moléculas e/ou átomos
+- Exemplos: headers, footers, listas de cards
+- Localização: `app/PAGE_NAME/components/organisms/`
+
+### Templates
+- Estruturas de página sem conteúdo real
+- Define o layout e a organização dos organismos
+- Localização: `app/PAGE_NAME/components/templates/`
+
+### Exemplo de Estrutura
+```
+app/PAGE_NAME/components
+├── molecules/       # Moléculas
+│   ├── search-bar.tsx
+│   └── form-field.tsx
+├── organisms/       # Organismos
+│   ├── header.tsx
+│   └── footer.tsx
+└── templates/       # Templates
+    ├── dashboard.tsx
+    └── auth.tsx
+```
+
+
+
