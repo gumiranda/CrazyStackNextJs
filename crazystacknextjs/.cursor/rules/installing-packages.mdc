@@ -3,10 +3,8 @@ description: How to install packages
 globs: 
 alwaysApply: false
 ---
-- Use `pnpm`.
-- Don't install in root. Install in `apps/web`:
+- Use `bun`. 
 
-```sh
-cd apps/web
-pnpm add ...
+```sh 
+bun add ...
 ```

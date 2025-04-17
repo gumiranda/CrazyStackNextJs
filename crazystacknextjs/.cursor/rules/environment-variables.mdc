@@ -12,7 +12,7 @@ This is how we add environment variables to the project:
       NEW_VARIABLE=value_example
       ```
 
-  2. Add to `apps/web/env.ts`:
+  2. Add to `env.ts`:
       ```typescript
       // For server-only variables
       server: {
@@ -31,18 +31,7 @@ This is how we add environment variables to the project:
       - Must be prefixed with `NEXT_PUBLIC_`
       - Add to both `client` and `experimental__runtimeEnv` sections
 
-  4. Add to `turbo.json` under `globalDependencies`:
-      ```json
-      {
-        "tasks": {
-          "build": {
-            "env": [
-              "NEW_VARIABLE"
-            ]
-          }
-        }
-      }
-      ```
+
 
 examples:
   - input: |
@@ -54,11 +43,7 @@ examples:
       server: {
         API_KEY: z.string(),
       }
-
-      # turbo.json
-      "build": {
-        "env": ["API_KEY"]
-      }
+ 
     output: "Server-side environment variable properly added"
 
   - input: |
@@ -73,14 +58,11 @@ examples:
       experimental__runtimeEnv: {
         NEXT_PUBLIC_FEATURE_ENABLED: process.env.NEXT_PUBLIC_FEATURE_ENABLED,
       }
-
-      # turbo.json
-      "build": {
-        "env": ["NEXT_PUBLIC_FEATURE_ENABLED"]
-      }
-    output: "Client-side environment variable properly added"
+ 
 
 references:
   - apps/web/env.ts
-  - apps/web/.env.example
-  - turbo.json
+  - apps/web/.env.example 
+
+
+  

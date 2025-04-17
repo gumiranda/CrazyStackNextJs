@@ -3,7 +3,7 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Restaurantix - Master Rule Index
+# Belezix - Master Rule Index
 
 This document serves as the central index for all active Cursor rules within this repository, organized by category. These rules define processes, structures, and guidelines for development.
 
