@@ -17,8 +17,6 @@ Fundamental project structure, setup, and general development guidelines.
 | @project-structure.mdc             | Project structure and file organization guidelines          |
 | @installing-packages.mdc           | How to install packages                                     |
 | @environment-variables.mdc         | Add environment variable                                    |
-| @logging.mdc                       | How to do backend logging                                   |
-| @utilities.mdc                     | Util functions                                              |
 | @task-list.mdc                     | Guidelines for creating and managing task lists             |
 
 ## Frontend & UI
@@ -31,27 +29,12 @@ Guidelines for building user interfaces and handling frontend logic.
 | @ui-components.mdc                 | UI component and styling guidelines (Shadcn, Radix, Tailwind) |
 | @form-handling.mdc                 | Form handling using React Hook Form and Zod                 |
 | @data-fetching.mdc                 | Fetching data from the API using @tanstack/react-query                        |
-
-## Backend & API
-
-Guidelines for implementing backend logic, APIs, and data persistence.
-
-| Rule File                          | Description                                                 |
-| :--------------------------------- | :---------------------------------------------------------- |
-| @api-routes.mdc                    | Guidelines for implementing Next.js API routes (general)    |
-| @get-api-route.mdc                 | Guidelines for implementing GET API routes in Next.js       |
-| @server-actions.mdc                | Guidelines for implementing Next.js server actions          |
-| @prisma.mdc                        | How to use Prisma                                           |
-| @gmail-api.mdc                     | Guidelines for working with Gmail API                       |
  
  
 
-## Features
 
-Rules specific to major application features.
 
-| Rule File                          | Description                                                 |
-| :--------------------------------- | :---------------------------------------------------------- |
-| @features/cleaner.mdc              | Explains the Inbox Cleaner feature                          |
-| @features/knowledge.mdc            | Explains the Knowledge Base feature                         |
-| @features/reply-tracker.mdc        | Explains the Reply Tracker (Reply Zero) feature             |
+
+
+
+
